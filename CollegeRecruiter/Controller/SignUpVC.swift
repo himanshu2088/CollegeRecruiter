@@ -236,9 +236,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
                 "primaryAddress" : primaryAdd,
                 "currentAddress" : currentAdd,
                 "city" : city,
-                "password" : password,
-                "uniqueID" : "CS" + enrollment,
-                "confirmPassword" : confirmPassword
+                "uniqueID" : "CS" + enrollment
                 ], completion: { (error) in
                     if let error = error {
                         self.spinner.stopAnimating()

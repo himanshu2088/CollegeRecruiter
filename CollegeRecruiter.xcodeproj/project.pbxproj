@@ -21,6 +21,9 @@
 		20CA54DD2453511D0073206D /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20CA54DC2453511D0073206D /* SignUpVC.swift */; };
 		20E58958245613BD00DD66A0 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E58957245613BD00DD66A0 /* MainVC.swift */; };
 		20E5895A245616A400DD66A0 /* ForgotPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E58959245616A400DD66A0 /* ForgotPassVC.swift */; };
+		20F84873245AB8200044A30C /* StudentPersonalDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F84872245AB8200044A30C /* StudentPersonalDetailsVC.swift */; };
+		20F84875245ABB420044A30C /* StudentEducationalDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F84874245ABB420044A30C /* StudentEducationalDetailsVC.swift */; };
+		20F84877245ABB540044A30C /* StudentSkillsDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F84876245ABB540044A30C /* StudentSkillsDetailsVC.swift */; };
 		20FDEDA12454669D008740F7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20FDEDA02454669D008740F7 /* GoogleService-Info.plist */; };
 		C93F9F2E915503D684577C5F /* Pods_CollegeRecruiter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA82247DDB189EF67CBEE429 /* Pods_CollegeRecruiter.framework */; };
 /* End PBXBuildFile section */
@@ -43,6 +46,9 @@
 		20CA54DC2453511D0073206D /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		20E58957245613BD00DD66A0 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		20E58959245616A400DD66A0 /* ForgotPassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassVC.swift; sourceTree = "<group>"; };
+		20F84872245AB8200044A30C /* StudentPersonalDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentPersonalDetailsVC.swift; sourceTree = "<group>"; };
+		20F84874245ABB420044A30C /* StudentEducationalDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentEducationalDetailsVC.swift; sourceTree = "<group>"; };
+		20F84876245ABB540044A30C /* StudentSkillsDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentSkillsDetailsVC.swift; sourceTree = "<group>"; };
 		20FDEDA02454669D008740F7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9EA2822A3BEF313607B08A7C /* Pods-CollegeRecruiter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CollegeRecruiter.debug.xcconfig"; path = "Target Support Files/Pods-CollegeRecruiter/Pods-CollegeRecruiter.debug.xcconfig"; sourceTree = "<group>"; };
 		CA82247DDB189EF67CBEE429 /* Pods_CollegeRecruiter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CollegeRecruiter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +114,9 @@
 				20ADF29624557ACC003A8413 /* EducationDetailsVC.swift */,
 				20ADF29824557ADD003A8413 /* SkillDetailsVC.swift */,
 				20E58957245613BD00DD66A0 /* MainVC.swift */,
+				20F84872245AB8200044A30C /* StudentPersonalDetailsVC.swift */,
+				20F84874245ABB420044A30C /* StudentEducationalDetailsVC.swift */,
+				20F84876245ABB540044A30C /* StudentSkillsDetailsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -268,11 +277,14 @@
 			files = (
 				209A4110245744FB004B33D1 /* CompanySignUpVC.swift in Sources */,
 				20CA54DD2453511D0073206D /* SignUpVC.swift in Sources */,
+				20F84875245ABB420044A30C /* StudentEducationalDetailsVC.swift in Sources */,
 				206F00372453414B003B9535 /* ViewController.swift in Sources */,
 				206F00332453414B003B9535 /* AppDelegate.swift in Sources */,
 				20ADF29924557ADD003A8413 /* SkillDetailsVC.swift in Sources */,
 				209A410A245741B7004B33D1 /* StudentCompanyVC.swift in Sources */,
 				20ADF29724557ACC003A8413 /* EducationDetailsVC.swift in Sources */,
+				20F84873245AB8200044A30C /* StudentPersonalDetailsVC.swift in Sources */,
+				20F84877245ABB540044A30C /* StudentSkillsDetailsVC.swift in Sources */,
 				206F00352453414B003B9535 /* SceneDelegate.swift in Sources */,
 				20E5895A245616A400DD66A0 /* ForgotPassVC.swift in Sources */,
 				209A410C245744C6004B33D1 /* CompanyLoginVC.swift in Sources */,

@@ -201,53 +201,5 @@ class ViewController: UIViewController {
         forgotPassBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
         
     }
-
-
+    
 }
-
-////
-////  EmployeeCompanyVC.swift
-////  CollegeRecruiter
-////
-////  Created by Himanshu Joshi on 27/04/20.
-////  Copyright © 2020 Himanshu Joshi. All rights reserved.
-////
-//
-//import UIKit
-//
-//class EmployeeCompanyVC: UIViewController {
-//    
-//    let companyBtn: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Company Login", for: .normal)
-//        button.titleLabel?.font = UIFont(name: "Avenir", size: 25.0)
-//        button.tintColor = .black
-//        button.backgroundColor = .lightGray
-////        button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
-//        return button
-//    }()
-//    
-//    let Btn: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Student Login", for: .normal)
-//        button.titleLabel?.font = UIFont(name: "Avenir", size: 25.0)
-//        button.tintColor = .black
-//        button.backgroundColor = .lightGray
-////        button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
-//        return button
-//    }()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        self.view.addSubview(companyBtn)
-//        companyBtn.translatesAutoresizingMaskIntoConstraints = false
-//        companyBtn.isUserInteractionEnabled = true
-//        companyBtn.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100.0).isActive = true
-//        companyBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
-//        companyBtn.trailingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: -20.0).isActive = true
-//        
-//    }
-//
-//}
-
