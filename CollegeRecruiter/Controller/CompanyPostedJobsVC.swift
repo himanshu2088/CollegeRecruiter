@@ -1,22 +1,15 @@
 //
-//  StudentSkillsDetailsVC.swift
+//  CompanyPostedJobsVC.swift
 //  CollegeRecruiter
 //
-//  Created by Himanshu Joshi on 30/04/20.
+//  Created by Himanshu Joshi on 07/05/20.
 //  Copyright © 2020 Himanshu Joshi. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    let currentUserUID = Auth.auth().currentUser?.uid
-    let collectionRef = Firestore.firestore().collection("student")
-
-    let keyArray = ["Skills", "Internship Details"]
-
-    var valueArray = [String]()
+class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -24,12 +17,16 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
         return spinner
     }()
     
+    var jobsArray = [String]()
+    var jobsDescriptionArray = [String]()
+    var jobsDocumentIdArray = [String]()
+    
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UINib(nibName: "StudentSkillsDetailsCell", bundle: nil), forCellReuseIdentifier: "studentSkillsDetailsCell")
-        tableView.allowsSelection = false
-        tableView.rowHeight = 180
+        tableView.register(UINib(nibName: "JobsCell", bundle: nil), forCellReuseIdentifier: "jobsCell")
+        tableView.rowHeight = 117.0
         tableView.backgroundColor = .white
+        tableView.allowsSelection = true
         return tableView
     }()
 
@@ -38,26 +35,28 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
 
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.separatorStyle = .none
-        
+                        
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         spinner.startAnimating()
-                
-        collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
-            let data = snapshot?.data()
-            let skillsData = data!["skills"] as? String
-            let internshipData = data!["internshipDetails"] as? String
-            
-            self.valueArray.insert(skillsData!, at: 0)
-            self.valueArray.insert(internshipData!, at: 1)
-            
+        
+        
+        Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
+            let documents = snapshot?.documents
+            for document in documents! {
+                let documentId = document.documentID
+                let jobTitle = document.data()["jobTitle"] as? String
+                let jobDescription = document.data()["jobdescription"] as? String
+                self.jobsDocumentIdArray.append(documentId)
+                self.jobsArray.append(jobTitle!)
+                self.jobsDescriptionArray.append(jobDescription!)
+            }
+
             self.spinner.stopAnimating()
-            
+
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
@@ -65,8 +64,9 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
-            
+
         }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,17 +74,24 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return valueArray.count
+        return jobsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "studentSkillsDetailsCell", for: indexPath) as? StudentSkillsDetailsCell {
-            cell.key.text = keyArray[indexPath.row]
-            cell.value.text = valueArray[indexPath.row]
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "jobsCell", for: indexPath) as? JobsCell {
+            cell.jobTitle.text = jobsArray[indexPath.row]
+            cell.jobDescription.text = jobsDescriptionArray[indexPath.row]
             return cell
         } else {
             return UITableViewCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "AppliedStudentsVC") as? AppliedStudentsVC
+        nextViewController?.documentId = jobsDocumentIdArray[indexPath.row]
+        self.present(nextViewController!, animated:true, completion:nil)
     }
 
 }

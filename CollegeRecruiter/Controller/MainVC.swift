@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class MainVC: UIViewController {
+class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var leading: NSLayoutConstraint!
     @IBOutlet weak var trailing: NSLayoutConstraint!
@@ -18,6 +18,13 @@ class MainVC: UIViewController {
     
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("student")
+    
+    var field = "default"
+    
+    var jobTitleArray = [String]()
+    var jobsCompanyArray = [String]()
+    var jobsSalaryArray = [String]()
+    var jobsDocumentIdArray = [String]()
     
     let homeView: UIView = {
         let view = UIView()
@@ -83,6 +90,15 @@ class MainVC: UIViewController {
         return label
     }()
     
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UINib(nibName: "StudentJobs", bundle: nil), forCellReuseIdentifier: "studentJobs")
+        tableView.rowHeight = 105.0
+        tableView.allowsSelection = true
+        tableView.backgroundColor = .white
+        return tableView
+    }()
+    
     @IBAction func logoutTapped(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -108,90 +124,110 @@ class MainVC: UIViewController {
         leading.constant = 0
         trailing.constant = 0
         
-        self.profileView.removeFromSuperview()
-        self.view2.addSubview(homeView)
-        
-        homeView.translatesAutoresizingMaskIntoConstraints = false
-        homeView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
-        homeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
-        homeView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50.0).isActive = true
-        homeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
-        
-        self.homeView.addSubview(spinner)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerYAnchor.constraint(equalTo: self.homeView.centerYAnchor).isActive = true
-        spinner.centerXAnchor.constraint(equalTo: self.homeView.centerXAnchor).isActive = true
-        
-        spinner.startAnimating()
-        
-        collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
-            let data = snapshot?.data()
-            let nameData = data!["name"] as? String
-            let admissionNoData = data!["admissionNo"] as? String
-            let branchData = data!["branch"] as? String
-            let mobileNo = data!["mobileNo"] as? String
-            
-            self.spinner.stopAnimating()
-            self.name.text = nameData!
-            self.nameLabel.text = nameData!
-            self.admissionNoText.text = admissionNoData!
-            self.mobileText.text = mobileNo!
-            self.branchText.text = "B.Tech " + branchData!
-            
-            self.homeView.addSubview(self.name)
-            self.name.translatesAutoresizingMaskIntoConstraints = false
-            self.name.centerXAnchor.constraint(equalTo: self.homeView.centerXAnchor, constant: 0.0).isActive = true
-            self.name.centerYAnchor.constraint(equalTo: self.homeView.centerYAnchor, constant: -100.0).isActive = true
-            
-            self.homeView.addSubview(self.admissionNo)
-            self.admissionNo.translatesAutoresizingMaskIntoConstraints = false
-            self.admissionNo.leadingAnchor.constraint(equalTo: self.homeView.leadingAnchor, constant: 20.0).isActive = true
-            self.admissionNo.centerYAnchor.constraint(equalTo: self.homeView.centerYAnchor, constant: 20.0).isActive = true
-            
-            self.homeView.addSubview(self.branch)
-            self.branch.translatesAutoresizingMaskIntoConstraints = false
-            self.branch.leadingAnchor.constraint(equalTo: self.homeView.leadingAnchor, constant: 20.0).isActive = true
-            self.branch.topAnchor.constraint(equalTo: self.admissionNo.bottomAnchor, constant: 35.0).isActive = true
-            
-            self.homeView.addSubview(self.mobile)
-            self.mobile.translatesAutoresizingMaskIntoConstraints = false
-            self.mobile.leadingAnchor.constraint(equalTo: self.homeView.leadingAnchor, constant: 20.0).isActive = true
-            self.mobile.topAnchor.constraint(equalTo: self.branch.bottomAnchor, constant: 35.0).isActive = true
-            
-            self.homeView.addSubview(self.mobileText)
-            self.mobileText.translatesAutoresizingMaskIntoConstraints = false
-            self.mobileText.trailingAnchor.constraint(equalTo: self.homeView.trailingAnchor, constant: -20.0).isActive = true
-            self.mobileText.centerYAnchor.constraint(equalTo: self.mobile.centerYAnchor, constant: 0.0).isActive = true
-            self.mobileText.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
-            
-            self.homeView.addSubview(self.admissionNoText)
-            self.admissionNoText.translatesAutoresizingMaskIntoConstraints = false
-            self.admissionNoText.trailingAnchor.constraint(equalTo: self.homeView.trailingAnchor, constant: -20.0).isActive = true
-            self.admissionNoText.centerYAnchor.constraint(equalTo: self.admissionNo.centerYAnchor, constant: 0.0).isActive = true
-            self.admissionNoText.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
-            
-            self.homeView.addSubview(self.branchText)
-            self.branchText.translatesAutoresizingMaskIntoConstraints = false
-            self.branchText.trailingAnchor.constraint(equalTo: self.homeView.trailingAnchor, constant: -20.0).isActive = true
-            self.branchText.centerYAnchor.constraint(equalTo: self.branch.centerYAnchor, constant: 0.0).isActive = true
-            self.branchText.heightAnchor.constraint(equalToConstant: 80.0).isActive = true
-            self.branchText.widthAnchor.constraint(equalToConstant: 160.0).isActive = true
-            
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
         }
+        
+        tableView.removeFromSuperview()
+        
+        viewDidLoad()
         
     }
     
     @IBAction func profileBtnPressed(_ sender: UIButton) {
         leading.constant = 0
         trailing.constant = 0
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
     }
     
     @IBAction func jobsBtnPressed(_ sender: UIButton) {
+        leading.constant = 0
+        trailing.constant = 0
         
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+        
+        name.removeFromSuperview()
+        admissionNo.removeFromSuperview()
+        branch.removeFromSuperview()
+        mobile.removeFromSuperview()
+        branchText.removeFromSuperview()
+        admissionNoText.removeFromSuperview()
+        mobileText.removeFromSuperview()
+        
+        spinner.startAnimating()
+        
+        Firestore.firestore().collection("job").whereField("branch", isEqualTo: field).getDocuments { (snapshot, error) in
+            let documents = snapshot?.documents
+            for document in documents! {
+                let documentId = document.documentID
+                let jobTitle = document.data()["jobTitle"] as? String
+                let jobCompany = document.data()["companyName"] as? String
+                let jobSalary = document.data()["salary"] as? String
+                self.jobsDocumentIdArray.append(documentId)
+                self.jobTitleArray.append(jobTitle!)
+                self.jobsCompanyArray.append(jobCompany!)
+                self.jobsSalaryArray.append(jobSalary!)
+            }
+
+            self.spinner.stopAnimating()
+
+            self.view2.addSubview(self.tableView)
+            self.tableView.translatesAutoresizingMaskIntoConstraints = false
+            self.tableView.isUserInteractionEnabled = true
+            self.tableView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 60.0).isActive = true
+            self.tableView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+            self.tableView.bottomAnchor.constraint(equalTo: self.view2.bottomAnchor, constant: 0.0).isActive = true
+            self.tableView.trailingAnchor.constraint(equalTo: self.view2.trailingAnchor, constant: 0.0).isActive = true
+
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return jobTitleArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "studentJobs", for: indexPath) as? StudentJobs {
+            cell.jobTitle.text = jobTitleArray[indexPath.row]
+            cell.companyName.text = jobsCompanyArray[indexPath.row]
+            cell.salary.text = "Salary " + jobsSalaryArray[indexPath.row]
+            return cell
+        } else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ParticularJobVC") as? ParticularJobVC
+        nextViewController?.documentId = jobsDocumentIdArray[indexPath.row]
+        self.present(nextViewController!, animated:true, completion:nil)
     }
     
     @IBAction func myJobsBtnPressed(_ sender: UIButton) {
+        leading.constant = 0
+        trailing.constant = 0
         
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MyJobsVC") as? MyJobsVC
+        self.present(nextViewController!, animated:true, completion:nil)
     }
     
     @IBAction func feedback(_ sender: UIButton) {
@@ -200,6 +236,9 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -221,6 +260,8 @@ class MainVC: UIViewController {
             self.admissionNoText.text = admissionNoData!
             self.mobileText.text = mobileNo!
             self.branchText.text = "B.Tech " + branchData!
+            
+            self.field = branchData!
             
             self.view2.addSubview(self.name)
             self.name.translatesAutoresizingMaskIntoConstraints = false
@@ -268,4 +309,3 @@ class MainVC: UIViewController {
 }
 
 //himanshujoshi2088@gmail.com
-

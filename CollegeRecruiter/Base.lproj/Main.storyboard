@@ -50,7 +50,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0xY-YN-hIg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="-643"/>
+            <point key="canvasLocation" x="89" y="-859"/>
         </scene>
         <!--Company Sign UpVC-->
         <scene sceneID="8dR-bN-Gzn">
@@ -65,7 +65,207 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XNm-fa-qjA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="833" y="-644"/>
+            <point key="canvasLocation" x="785" y="-860"/>
+        </scene>
+        <!--Company Forgot PassVC-->
+        <scene sceneID="WZH-Xu-V2x">
+            <objects>
+                <viewController storyboardIdentifier="CompanyForgotPassVC" id="TOU-vY-4Ja" customClass="CompanyForgotPassVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n5f-bE-3eE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Qtw-nF-CQT"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YHd-yg-BJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1489" y="-860"/>
+        </scene>
+        <!--Company MainVC-->
+        <scene sceneID="wty-mD-2dI">
+            <objects>
+                <viewController storyboardIdentifier="CompanyMainVC" id="YAk-xi-3ZF" customClass="CompanyMainVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Apz-JB-YUe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="loQ-f5-rUq">
+                                <rect key="frame" x="20" y="20" width="56" height="40"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="Home">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="homeBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="fDp-Xd-iJu"/>
+                                    <action selector="myJobsBtnPressed:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="GNb-Hr-A0u"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xfk-d2-cVg">
+                                <rect key="frame" x="20" y="80" width="58" height="40"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="Profile">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="myJobsBtnPressed:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="fxa-wH-PHY"/>
+                                    <action selector="profileBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="VE7-Uf-vTz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKy-xO-cZa">
+                                <rect key="frame" x="20" y="140" width="44" height="40"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="Jobs">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="jobsBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="iee-9z-4SW"/>
+                                    <action selector="myJobsBtnPressed:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="cz2-Km-cc7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vi4-sw-bfc">
+                                <rect key="frame" x="20" y="200" width="90" height="40"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="Feedback">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="feedbackBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="iTX-Zg-Oxf"/>
+                                    <action selector="myJobsBtnPressed:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="zFG-le-Jun"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOa-zB-nbP">
+                                <rect key="frame" x="20" y="260" width="65" height="40"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="nXU-9b-Eg5"/>
+                                    <action selector="myJobsBtnPressed:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="IYT-ci-iOa"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iHt-G2-5R2">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thY-By-thE">
+                                        <rect key="frame" x="20" y="20" width="54" height="40"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
+                                        <state key="normal" title="Menu"/>
+                                        <connections>
+                                            <action selector="menuBtnPressed:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="UfI-Ei-s6c"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x4V-LC-rSQ">
+                                        <rect key="frame" x="285" y="577" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="75o-xo-Gag"/>
+                                            <constraint firstAttribute="width" constant="60" id="WjS-ge-Bg7"/>
+                                        </constraints>
+                                        <state key="normal" image="plus"/>
+                                        <connections>
+                                            <action selector="addButton:" destination="YAk-xi-3ZF" eventType="touchUpInside" id="QYZ-w8-G0k"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="thY-By-thE" firstAttribute="leading" secondItem="iHt-G2-5R2" secondAttribute="leading" constant="20" id="7kB-j5-r0c"/>
+                                    <constraint firstItem="thY-By-thE" firstAttribute="top" secondItem="iHt-G2-5R2" secondAttribute="top" constant="20" id="SOY-wp-DQU"/>
+                                    <constraint firstAttribute="trailing" secondItem="x4V-LC-rSQ" secondAttribute="trailing" constant="30" id="c94-Ag-0gm"/>
+                                    <constraint firstAttribute="bottom" secondItem="x4V-LC-rSQ" secondAttribute="bottom" constant="30" id="cEA-l5-CE1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="iHt-G2-5R2" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" id="0ys-Bg-RwV"/>
+                            <constraint firstItem="zOa-zB-nbP" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" constant="20" id="58X-mf-fqk"/>
+                            <constraint firstItem="loQ-f5-rUq" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" constant="20" id="CKa-Q4-sMd"/>
+                            <constraint firstItem="Xfk-d2-cVg" firstAttribute="top" secondItem="loQ-f5-rUq" secondAttribute="bottom" constant="20" id="EKC-t6-noT"/>
+                            <constraint firstItem="vi4-sw-bfc" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" constant="20" id="QQF-oy-gbU"/>
+                            <constraint firstItem="6cL-VK-Q2K" firstAttribute="bottom" secondItem="iHt-G2-5R2" secondAttribute="bottom" id="U9V-Qs-UDk"/>
+                            <constraint firstItem="6cL-VK-Q2K" firstAttribute="trailing" secondItem="iHt-G2-5R2" secondAttribute="trailing" id="WhA-Th-nf1"/>
+                            <constraint firstItem="vi4-sw-bfc" firstAttribute="top" secondItem="eKy-xO-cZa" secondAttribute="bottom" constant="20" id="axy-us-Gcv"/>
+                            <constraint firstItem="eKy-xO-cZa" firstAttribute="top" secondItem="Xfk-d2-cVg" secondAttribute="bottom" constant="20" id="bnD-vE-Jdx"/>
+                            <constraint firstItem="zOa-zB-nbP" firstAttribute="top" secondItem="vi4-sw-bfc" secondAttribute="bottom" constant="20" id="jYR-Kq-sFB"/>
+                            <constraint firstItem="eKy-xO-cZa" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" constant="20" id="mdA-dd-wTD"/>
+                            <constraint firstItem="Xfk-d2-cVg" firstAttribute="leading" secondItem="6cL-VK-Q2K" secondAttribute="leading" constant="20" id="rUt-ag-ahx"/>
+                            <constraint firstItem="iHt-G2-5R2" firstAttribute="top" secondItem="6cL-VK-Q2K" secondAttribute="top" id="tz0-en-uy1"/>
+                            <constraint firstItem="loQ-f5-rUq" firstAttribute="top" secondItem="6cL-VK-Q2K" secondAttribute="top" constant="20" id="y4A-8X-7hH"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6cL-VK-Q2K"/>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="x4V-LC-rSQ" id="vp4-8B-AmQ"/>
+                        <outlet property="leading" destination="0ys-Bg-RwV" id="yZ2-OX-g3t"/>
+                        <outlet property="trailing" destination="WhA-Th-nf1" id="smM-Ai-0BZ"/>
+                        <outlet property="view2" destination="iHt-G2-5R2" id="dXc-fA-zYw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kLC-Eo-sc2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2197.5999999999999" y="-859.52023988005999"/>
+        </scene>
+        <!--Add JobVC-->
+        <scene sceneID="InA-o1-8uc">
+            <objects>
+                <viewController storyboardIdentifier="AddJobVC" id="32i-XN-uak" customClass="AddJobVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="evz-uo-Y2D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="vrs-5f-Cc9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3go-kl-P88" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3251" y="-1551"/>
+        </scene>
+        <!--Applied StudentsVC-->
+        <scene sceneID="Cxb-mg-mBa">
+            <objects>
+                <viewController storyboardIdentifier="AppliedStudentsVC" id="cyr-Gs-O9a" customClass="AppliedStudentsVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bJH-Rd-J4G">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="2Lt-cb-Y56"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5L9-rP-ebL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4001" y="-1551"/>
+        </scene>
+        <!--Particular StudentVC-->
+        <scene sceneID="U6S-uT-msJ">
+            <objects>
+                <viewController storyboardIdentifier="ParticularStudentVC" id="WgD-rf-w8S" customClass="ParticularStudentVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="K1b-u7-GIB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="8R0-dF-X1s"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="euU-wz-pzb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4722" y="-1551"/>
+        </scene>
+        <!--Company Posted JobsVC-->
+        <scene sceneID="nwZ-ti-XR1">
+            <objects>
+                <viewController storyboardIdentifier="CompanyPostedJobsVC" id="dyK-OP-Uue" customClass="CompanyPostedJobsVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bcY-Sl-NYu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="bW1-Ed-V4s"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gwa-t1-AjS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5484" y="-1551"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -173,6 +373,7 @@
                                             <constraint firstAttribute="height" constant="35" id="GG4-dX-AkG"/>
                                             <constraint firstAttribute="width" constant="35" id="rFw-0X-9br"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                         <state key="normal" image="menu"/>
                                         <connections>
                                             <action selector="menuTap:" destination="ufR-tI-5Ld" eventType="touchUpInside" id="7n9-B8-IqL"/>
@@ -240,6 +441,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EGf-cv-Oyr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3535.1999999999998" y="88.605697151424295"/>
+        </scene>
+        <!--Particular JobVC-->
+        <scene sceneID="O9T-Hh-pUt">
+            <objects>
+                <viewController storyboardIdentifier="ParticularJobVC" id="e4v-Bd-s1b" customClass="ParticularJobVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="soa-D4-mcP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="kNf-i1-wSQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Vb-ZJ-n7O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4508" y="89"/>
+        </scene>
+        <!--My JobsVC-->
+        <scene sceneID="YWU-AC-vGK">
+            <objects>
+                <viewController storyboardIdentifier="MyJobsVC" id="qRP-5D-4eO" customClass="MyJobsVC" customModule="CollegeRecruiter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jdo-Jv-53z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="UWP-Ut-mpn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fA1-8M-VmD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5286" y="89"/>
         </scene>
         <!--Skills Details-->
         <scene sceneID="0Ma-PQ-6jX">
@@ -343,5 +574,6 @@
     <resources>
         <image name="logout" width="512" height="512"/>
         <image name="menu" width="512" height="512"/>
+        <image name="plus" width="512" height="512"/>
     </resources>
 </document>

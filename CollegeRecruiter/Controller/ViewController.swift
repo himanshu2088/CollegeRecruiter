@@ -21,13 +21,6 @@ class ViewController: UIViewController {
     var emailArray = [String]()
     var id: String?
     
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "Student Login"
-        label.font = UIFont(name: "Avenir-Medium", size: 25.0)
-        return label
-    }()
-    
     let emailTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Email"
@@ -45,9 +38,9 @@ class ViewController: UIViewController {
     let loginBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        button.tintColor = .black
-        button.backgroundColor = .lightGray
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
+        button.tintColor = .white
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
         button.addTarget(self, action: #selector(signIn), for: .touchUpInside)
         return button
     }()
@@ -59,9 +52,8 @@ class ViewController: UIViewController {
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-            
         }
-
+        
         spinner.startAnimating()
         
         guard let email = emailTextField.text , let password = passwordTextField.text else { return }
@@ -103,7 +95,6 @@ class ViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
         }
-
         
     }
     
@@ -153,24 +144,17 @@ class ViewController: UIViewController {
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
-        
-        self.view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isUserInteractionEnabled = false
-        label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30.0).isActive = true
-        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-        
         self.view.addSubview(emailTextField)
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.isUserInteractionEnabled = true
-        emailTextField.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -80.0).isActive = true
+        emailTextField.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = true
         emailTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         emailTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
         self.view.addSubview(passwordTextField)
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.isUserInteractionEnabled = true
-        passwordTextField.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor, constant: 10.0).isActive = true
+        passwordTextField.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor, constant: 15.0).isActive = true
         passwordTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         passwordTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -178,9 +162,8 @@ class ViewController: UIViewController {
         loginBtn.translatesAutoresizingMaskIntoConstraints = false
         loginBtn.isUserInteractionEnabled = true
         loginBtn.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor, constant: 15.0).isActive = true
-        loginBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-        loginBtn.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        loginBtn.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        loginBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        loginBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
         self.view.addSubview(signOutlabel)
         signOutlabel.translatesAutoresizingMaskIntoConstraints = false
@@ -197,7 +180,7 @@ class ViewController: UIViewController {
         self.view.addSubview(forgotPassBtn)
         forgotPassBtn.translatesAutoresizingMaskIntoConstraints = false
         forgotPassBtn.isUserInteractionEnabled = true
-        forgotPassBtn.topAnchor.constraint(equalTo: self.signOutlabel.bottomAnchor, constant: 15.0).isActive = true
+        forgotPassBtn.topAnchor.constraint(equalTo: self.signOutlabel.bottomAnchor, constant: 10.0).isActive = true
         forgotPassBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
         
     }

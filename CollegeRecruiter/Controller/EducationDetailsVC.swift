@@ -195,9 +195,9 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let nextBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        button.tintColor = .black
-        button.backgroundColor = .lightGray
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
+        button.tintColor = .white
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
         button.addTarget(self, action: #selector(saveEducationDetails), for: .touchUpInside)
         return button
     }()
@@ -468,9 +468,8 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.isUserInteractionEnabled = true
         nextBtn.topAnchor.constraint(equalTo: self.passingYearGraduationTextField.bottomAnchor, constant: 15.0).isActive = true
-        nextBtn.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0.0).isActive = true
-        nextBtn.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        nextBtn.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        nextBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        nextBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         nextBtn.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
     }
     

@@ -58,9 +58,9 @@ class SkillDetailsVC: UIViewController {
     let finishBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        button.tintColor = .black
-        button.backgroundColor = .lightGray
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
+        button.tintColor = .white
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
         button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         return button
     }()
@@ -100,7 +100,7 @@ class SkillDetailsVC: UIViewController {
                             let alert = UIAlertController(title: "Success", message: "Account created successfully. Check your Gmail to verify your account. An email verification link is sent there.", preferredStyle: .alert)
                             let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
                               let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                              let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainVC") as? MainVC
+                              let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
                               self.present(nextViewController!, animated:true, completion:nil)
                             })
                             alert.addAction(action)
@@ -166,22 +166,9 @@ class SkillDetailsVC: UIViewController {
         finishBtn.translatesAutoresizingMaskIntoConstraints = false
         finishBtn.isUserInteractionEnabled = true
         finishBtn.topAnchor.constraint(equalTo: self.passportNumberTextField.bottomAnchor, constant: 15.0).isActive = true
-        finishBtn.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0.0).isActive = true
-        finishBtn.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        finishBtn.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        finishBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        finishBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         finishBtn.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
     }
 
 }
-
-
-//let currentUser = Auth.auth().currentUser
-//currentUser?.sendEmailVerification(completion: { (error) in
-//    if let error = error {
-//        print("Error while sending email verification, \(error.localizedDescription)")
-//    }
-//    let alert = UIAlertController(title: "Success", message: "Account created successfully. Check your Gmail to verify your account. An email verification link is sent there.", preferredStyle: .alert)
-//    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-//    alert.addAction(action)
-//    self.present(alert, animated: true, completion: nil)
-//})

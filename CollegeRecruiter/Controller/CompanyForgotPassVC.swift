@@ -1,8 +1,8 @@
 //
-//  ForgotPassVC.swift
+//  CompanyForgotPassVC.swift
 //  CollegeRecruiter
 //
-//  Created by Himanshu Joshi on 27/04/20.
+//  Created by Himanshu Joshi on 01/05/20.
 //  Copyright © 2020 Himanshu Joshi. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SkyFloatingLabelTextField
 
-class ForgotPassVC: UIViewController {
+class CompanyForgotPassVC: UIViewController {
     
     var emailArray = [String]()
     
@@ -49,7 +49,7 @@ class ForgotPassVC: UIViewController {
         
         spinner.startAnimating()
         
-        Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
+        Firestore.firestore().collection("company").getDocuments { (snapshot, error) in
             if let error = error {
                 self.spinner.stopAnimating()
                 print(error.localizedDescription)
@@ -68,14 +68,13 @@ class ForgotPassVC: UIViewController {
                 self.present(alert, animated: true, completion: nil)
                 return
             }
-            else {
+            else{
                 Auth.auth().sendPasswordReset(withEmail: (self.emailTextField.text)!) { (error) in
                     if let error = error {
                         self.spinner.stopAnimating()
                         print("Error while sending reset link, \(error.localizedDescription)")
                         return
                     } else {
-                        
                         self.spinner.stopAnimating()
                         let alert = UIAlertController(title: "Success", message: "Password reset link has been sent to your Gmail. Please reset your password and then login.", preferredStyle: .alert)
                         let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
@@ -90,6 +89,10 @@ class ForgotPassVC: UIViewController {
             }
         }
         
+    }
+    
+    @objc func back() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -113,7 +116,6 @@ class ForgotPassVC: UIViewController {
         resetPassBtn.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor, constant: 15.0).isActive = true
         resetPassBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         resetPassBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-        
     }
 
 }

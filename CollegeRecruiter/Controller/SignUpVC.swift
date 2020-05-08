@@ -27,13 +27,6 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         return s
     }()
     
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "Personal Details"
-        label.font = UIFont(name: "Avenir-Medium", size: 30.0)
-        return label
-    }()
-    
     let enrollmentTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Enrollment Number"
@@ -154,9 +147,9 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let nextBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        button.tintColor = .black
-        button.backgroundColor = .lightGray
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
+        button.tintColor = .white
+        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
         button.addTarget(self, action: #selector(toNextPage), for: .touchUpInside)
         return button
     }()
@@ -210,7 +203,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         
         spinner.startAnimating()
 
-         guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let fatherName = fatherTextField.text, let motherName = motherTextField.text, let branch = branchTextField.text, let batch = batchTextField.text, let gender = genderTextField.text, let dob = dobTextField.text, let category = categoryTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let parentMobile = parentMobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let city = cityTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
+         guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let fatherName = fatherTextField.text, let motherName = motherTextField.text, let branch = branchTextField.text, let batch = batchTextField.text, let gender = genderTextField.text, let dob = dobTextField.text, let category = categoryTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let parentMobile = parentMobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let city = cityTextField.text, let password = passwordTextField.text else { return }
 
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {
@@ -291,17 +284,11 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        
-        scrollView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isUserInteractionEnabled = false
-        label.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30.0).isActive = true
-        label.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0.0).isActive = true
 
         scrollView.addSubview(enrollmentTextField)
         enrollmentTextField.translatesAutoresizingMaskIntoConstraints = false
         enrollmentTextField.isUserInteractionEnabled = true
-        enrollmentTextField.topAnchor.constraint(equalTo: self.label.bottomAnchor, constant: 15.0).isActive = true
+        enrollmentTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 65.0).isActive = true
         enrollmentTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         enrollmentTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -428,9 +415,8 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.isUserInteractionEnabled = true
         nextBtn.topAnchor.constraint(equalTo: self.confirmPasswordTextField.bottomAnchor, constant: 15.0).isActive = true
-        nextBtn.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0.0).isActive = true
-        nextBtn.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        nextBtn.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        nextBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        nextBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
         scrollView.addSubview(loginLabel)
         loginLabel.translatesAutoresizingMaskIntoConstraints = false
