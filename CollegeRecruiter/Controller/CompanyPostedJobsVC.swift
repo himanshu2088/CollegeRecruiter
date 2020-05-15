@@ -11,6 +11,31 @@ import Firebase
 
 class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "back.png"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    @objc func back(_ sender : UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "POSTED JOBS"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
         spinner.color = .black
@@ -20,11 +45,12 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
     var jobsArray = [String]()
     var jobsDescriptionArray = [String]()
     var jobsDocumentIdArray = [String]()
+    var jobTime = [Int]()
     
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UINib(nibName: "JobsCell", bundle: nil), forCellReuseIdentifier: "jobsCell")
-        tableView.rowHeight = 117.0
+        tableView.rowHeight = 137.0
         tableView.backgroundColor = .white
         tableView.allowsSelection = true
         return tableView
@@ -35,6 +61,27 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
+        
+        self.view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.isUserInteractionEnabled = true
+        backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.addTarget(self, action: #selector(back(_:)), for: .allEvents)
+        
+        self.view.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view.addSubview(profileLabel)
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
                         
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -43,6 +90,7 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
         
         spinner.startAnimating()
         
+        let currentDate = Date()
         
         Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
             let documents = snapshot?.documents
@@ -50,6 +98,13 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
                 let documentId = document.documentID
                 let jobTitle = document.data()["jobTitle"] as? String
                 let jobDescription = document.data()["jobdescription"] as? String
+                let jobTime = document.data()["time"] as? Timestamp
+                
+                let diff = Calendar.current.dateComponents([.day], from: (jobTime?.dateValue())!, to: currentDate)
+                
+                let daysLeft = (diff.day)!
+                
+                self.jobTime.append(daysLeft)
                 self.jobsDocumentIdArray.append(documentId)
                 self.jobsArray.append(jobTitle!)
                 self.jobsDescriptionArray.append(jobDescription!)
@@ -60,7 +115,7 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
@@ -81,6 +136,11 @@ class CompanyPostedJobsVC: UIViewController, UITableViewDelegate, UITableViewDat
         if let cell = tableView.dequeueReusableCell(withIdentifier: "jobsCell", for: indexPath) as? JobsCell {
             cell.jobTitle.text = jobsArray[indexPath.row]
             cell.jobDescription.text = jobsDescriptionArray[indexPath.row]
+            if jobTime[indexPath.row] > 0 {
+                cell.day.text = "Posted " + "\(jobTime[indexPath.row])" + " day ago"
+            } else {
+                cell.day.text = "Posted today"
+            }
             return cell
         } else {
             return UITableViewCell()

@@ -12,6 +12,20 @@ import Firebase
 
 class SkillDetailsVC: UIViewController {
     
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "EXPERIENCE DETAILS"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
         spinner.color = .black
@@ -57,10 +71,11 @@ class SkillDetailsVC: UIViewController {
     
     let finishBtn: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Register", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
-        button.tintColor = .white
-        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
+        button.setTitle("SIGN UP", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
+        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+        button.layer.borderWidth = 1.0
+        button.tintColor = .black
         button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         return button
     }()
@@ -115,11 +130,22 @@ class SkillDetailsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view.addSubview(profileLabel)
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
 
         self.view.addSubview(scrollView)
 
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         
@@ -128,16 +154,10 @@ class SkillDetailsVC: UIViewController {
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
 
-        scrollView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isUserInteractionEnabled = false
-        label.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30.0).isActive = true
-        label.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0.0).isActive = true
-
         scrollView.addSubview(skillsTextField)
         skillsTextField.translatesAutoresizingMaskIntoConstraints = false
         skillsTextField.isUserInteractionEnabled = true
-        skillsTextField.topAnchor.constraint(equalTo: self.label.bottomAnchor, constant: 15.0).isActive = true
+        skillsTextField.topAnchor.constraint(equalTo: self.label.bottomAnchor, constant: 20.0).isActive = true
         skillsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         skillsTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -168,6 +188,7 @@ class SkillDetailsVC: UIViewController {
         finishBtn.topAnchor.constraint(equalTo: self.passportNumberTextField.bottomAnchor, constant: 15.0).isActive = true
         finishBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         finishBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        finishBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         finishBtn.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
     }
 

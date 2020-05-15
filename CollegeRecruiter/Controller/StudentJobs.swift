@@ -24,4 +24,5 @@ class StudentJobs: UITableViewCell {
     @IBOutlet weak var companyName: UILabel!
     @IBOutlet weak var salary: UILabel!
     @IBOutlet weak var jobTitle: UILabel!
+    @IBOutlet weak var days: UILabel!
 }

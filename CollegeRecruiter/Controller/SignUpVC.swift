@@ -12,6 +12,31 @@ import Firebase
 
 class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "back.png"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    @objc func back(_ sender : UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "SIGNUP"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
         spinner.color = .black
@@ -20,6 +45,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var emailArray = [String]()
     let genderData = ["Male", "Female"]
+    let branchData = ["Computer Science", "Mechanical", "Civil", "Electronics and Communications"]
     
     let scrollView: UIScrollView = {
         let s = UIScrollView()
@@ -30,7 +56,6 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let enrollmentTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Enrollment Number"
-        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -67,7 +92,6 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let batchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Batch/Section"
-        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -80,14 +104,12 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let dobTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Date of Birth (dd/mm/yyyy)"
-        textField.keyboardType = .numbersAndPunctuation
         return textField
     }()
     
     let categoryTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Category"
-        textField.keyboardType = .emailAddress
         return textField
     }()
     
@@ -147,9 +169,10 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let nextBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 24.0)
-        button.tintColor = .white
-        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
+        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+        button.layer.borderWidth = 1.0
+        button.tintColor = .black
         button.addTarget(self, action: #selector(toNextPage), for: .touchUpInside)
         return button
     }()
@@ -245,29 +268,33 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         }
 
     }
-    
-    let loginLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Already Registered?"
-        label.font = UIFont(name: "Avenir", size: 20.0)
-        return label
-    }()
-    
-    let loginBtn: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        button.tintColor = .systemBlue
-        button.addTarget(self, action: #selector(toViewController), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func toViewController() {
-        self.dismiss(animated: true, completion: nil)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let branchPicker = UIPickerView()
+        branchTextField.inputView = branchPicker
+        branchPicker.delegate = self
+        
+        self.view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.isUserInteractionEnabled = true
+        backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.addTarget(self, action: #selector(back(_:)), for: .allEvents)
+        
+        self.view.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view.addSubview(profileLabel)
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
         
         let genderPicker = UIPickerView()
         genderTextField.inputView = genderPicker
@@ -276,7 +303,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         self.view.addSubview(scrollView)
 
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60.0).isActive = true
         scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
         
@@ -288,7 +315,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         scrollView.addSubview(enrollmentTextField)
         enrollmentTextField.translatesAutoresizingMaskIntoConstraints = false
         enrollmentTextField.isUserInteractionEnabled = true
-        enrollmentTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 65.0).isActive = true
+        enrollmentTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20.0).isActive = true
         enrollmentTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         enrollmentTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -417,19 +444,8 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         nextBtn.topAnchor.constraint(equalTo: self.confirmPasswordTextField.bottomAnchor, constant: 15.0).isActive = true
         nextBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         nextBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-        
-        scrollView.addSubview(loginLabel)
-        loginLabel.translatesAutoresizingMaskIntoConstraints = false
-        loginLabel.isUserInteractionEnabled = true
-        loginLabel.topAnchor.constraint(equalTo: self.nextBtn.bottomAnchor, constant: 15.0).isActive = true
-        loginLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: -40.0).isActive = true
-        loginLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
-        
-        scrollView.addSubview(loginBtn)
-        loginBtn.translatesAutoresizingMaskIntoConstraints = false
-        loginBtn.isUserInteractionEnabled = true
-        loginBtn.centerYAnchor.constraint(equalTo: loginLabel.centerYAnchor, constant: 0.0).isActive = true
-        loginBtn.leadingAnchor.constraint(equalTo: loginLabel.trailingAnchor, constant: 10.0).isActive = true
+        nextBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        nextBtn.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
         
     }
     
@@ -439,15 +455,37 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return genderData.count
+        
+        if genderTextField.isEditing == true {
+            return genderData.count
+        }
+        else if branchTextField.isEditing == true {
+            return branchData.count
+        }
+        else {
+            return branchData.count
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return genderData[row]
+        if genderTextField.isEditing == true {
+            return genderData[row]
+        }
+        else if branchTextField.isEditing == true {
+            return branchData[row]
+        }
+        else {
+            return branchData[row]
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        genderTextField.text = genderData[row]
+        if genderTextField.isEditing == true {
+            genderTextField.text = genderData[row]
+        }
+        else if branchTextField.isEditing == true {
+            branchTextField.text = branchData[row]
+        }
     }
 
 }

@@ -9,11 +9,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="jobsCell" rowHeight="117" id="KGk-i7-Jjw" customClass="JobsCell" customModule="CollegeRecruiter" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="452" height="117"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="jobsCell" rowHeight="166" id="KGk-i7-Jjw" customClass="JobsCell" customModule="CollegeRecruiter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="452" height="117"/>
+                <rect key="frame" x="0.0" y="0.0" width="452" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IOS Developer " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3d-RC-2TQ">
@@ -28,35 +28,30 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yV2-5S-ZyS">
-                        <rect key="frame" x="382" y="30" width="60" height="60"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="QUT-GZ-8id"/>
-                            <constraint firstAttribute="width" constant="60" id="cEO-ye-FIe"/>
-                        </constraints>
-                        <state key="normal" image="delete"/>
-                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted 1 day ago" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UgA-5h-hUn">
+                        <rect key="frame" x="20" y="103.5" width="138" height="21.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="hHx-cj-xPI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Frg-fN-opG"/>
-                    <constraint firstAttribute="trailing" secondItem="yV2-5S-ZyS" secondAttribute="trailing" constant="10" id="KdH-gY-B6J"/>
+                    <constraint firstItem="UgA-5h-hUn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="HCw-z4-oe9"/>
+                    <constraint firstItem="UgA-5h-hUn" firstAttribute="top" secondItem="hHx-cj-xPI" secondAttribute="bottom" constant="5" id="KHp-dB-kQA"/>
                     <constraint firstAttribute="trailing" secondItem="hHx-cj-xPI" secondAttribute="trailing" constant="80" id="M7n-9S-i0e"/>
                     <constraint firstItem="w3d-RC-2TQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Q3W-r3-Zp5"/>
-                    <constraint firstItem="yV2-5S-ZyS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="30" id="Sx8-B9-aC2"/>
                     <constraint firstItem="w3d-RC-2TQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="woB-sA-GsL"/>
                     <constraint firstItem="hHx-cj-xPI" firstAttribute="top" secondItem="w3d-RC-2TQ" secondAttribute="bottom" constant="5" id="zBx-CG-WDN"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="deleteBtn" destination="yV2-5S-ZyS" id="3nR-Ug-Dsi"/>
+                <outlet property="day" destination="UgA-5h-hUn" id="2eK-10-U0e"/>
                 <outlet property="jobDescription" destination="hHx-cj-xPI" id="jzr-a8-qOm"/>
                 <outlet property="jobTitle" destination="w3d-RC-2TQ" id="DiF-Mj-BfH"/>
             </connections>
-            <point key="canvasLocation" x="233.33333333333334" y="146.98660714285714"/>
+            <point key="canvasLocation" x="208.69565217391306" y="162.72321428571428"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="delete" width="512" height="512"/>
-    </resources>
 </document>

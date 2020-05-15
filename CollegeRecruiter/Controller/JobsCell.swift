@@ -21,7 +21,7 @@ class JobsCell: UITableViewCell {
         
     }
     
-    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var jobTitle: UILabel!
     @IBOutlet weak var jobDescription: UILabel!
+    @IBOutlet weak var day: UILabel!
 }

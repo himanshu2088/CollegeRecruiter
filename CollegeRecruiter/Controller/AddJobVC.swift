@@ -10,9 +10,35 @@ import UIKit
 import Firebase
 import SkyFloatingLabelTextField
 
-class AddJobVC: UIViewController {
+class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "back.png"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    @objc func back(_ sender : UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "ADD JOB"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
     
     var companyName: String!
+    let branchData = ["Computer Science", "Mechanical", "Civil", "Electronics and Communications"]
     
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("company")
@@ -50,6 +76,8 @@ class AddJobVC: UIViewController {
     let branchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Branch"
+        
+//        asdasdasd
         return textField
     }()
     
@@ -68,7 +96,6 @@ class AddJobVC: UIViewController {
     let twelfthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "12/Diploma CGPA/%"
-        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -81,9 +108,10 @@ class AddJobVC: UIViewController {
     let postBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("POST JOB", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 24.0)
-        button.tintColor = .white
-        button.backgroundColor = #colorLiteral(red: 0, green: 0.5607843137, blue: 0.9843137255, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
+        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
+        button.layer.borderWidth = 1.0
+        button.tintColor = .black
         button.addTarget(self, action: #selector(postJob), for: .touchUpInside)
         return button
     }()
@@ -92,8 +120,6 @@ class AddJobVC: UIViewController {
 
         guard let title = titleTextField.text, let description = descriptionTextField.text, let requirements = requirementsTextField.text, let responsibilities = responsibilitiesTextField.text, let salary = salaryTextField.text, let tenthCGPA = tenthCGPATextField.text, let twelfthCGPA = twelfthCGPATextField.text, let graduationCGPA = graduationCGPATextField.text, let companyEmail = Auth.auth().currentUser?.email, let branch = branchTextField.text else { return }
         
-        let currentDateTime = Date()
-
         if title == "" || description == "" || requirements == "" || responsibilities == "" || salary == "" || tenthCGPA == "" || twelfthCGPA == "" || graduationCGPA == "" || branch == "" {
             let alert = UIAlertController(title: "Error", message: "Please enter all the fields to continue.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -114,7 +140,7 @@ class AddJobVC: UIViewController {
                 "twelfthCGPA" : twelfthCGPA,
                 "graduationCGPA" : graduationCGPA,
                 "studentsApplied" : [],
-                "time" : currentDateTime
+                "time" : FieldValue.serverTimestamp()
             ]) { (error) in
                 if let error = error {
                     print("Error setting job data in firestore, \(error.localizedDescription)")
@@ -133,12 +159,36 @@ class AddJobVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let branchPicker = UIPickerView()
+        branchTextField.inputView = branchPicker
+        branchPicker.delegate = self
+        
         collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
             let data = snapshot?.data()
             let nameData = data!["companyName"] as? String
             self.companyName = nameData!
         }
-
+    
+        self.view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.isUserInteractionEnabled = true
+        backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        backButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        backButton.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
+        backButton.addTarget(self, action: #selector(back(_:)), for: .allEvents)
+        
+        self.view.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view.addSubview(profileLabel)
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
@@ -147,7 +197,7 @@ class AddJobVC: UIViewController {
         self.view.addSubview(titleTextField)
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.isUserInteractionEnabled = true
-        titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 70.0).isActive = true
+        titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0).isActive = true
         titleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
         titleTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -213,7 +263,24 @@ class AddJobVC: UIViewController {
         postBtn.topAnchor.constraint(equalTo: self.graduationCGPATextField.bottomAnchor, constant: 15.0).isActive = true
         postBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
         postBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        postBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
     }
     
+    //UIPickerView Functions For Gender Text Field
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+            return branchData.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+            return branchData[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+            branchTextField.text = branchData[row]
+    }
 
 }

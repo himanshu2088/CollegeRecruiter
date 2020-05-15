@@ -11,6 +11,26 @@ import Firebase
 
 class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let verticalLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HOME"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("company")
     var job = "1"
@@ -40,6 +60,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var trailing: NSLayoutConstraint!
     @IBOutlet weak var leading: NSLayoutConstraint!
+    @IBOutlet weak var companyName: UILabel!
     
     let menuBtn: UIButton = {
         let button = UIButton(type: .system)
@@ -80,6 +101,24 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view2.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 80.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view2.addSubview(verticalLineView)
+        verticalLineView.translatesAutoresizingMaskIntoConstraints = false
+        verticalLineView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+        verticalLineView.widthAnchor.constraint(equalToConstant: 0.7).isActive = true
+        verticalLineView.heightAnchor.constraint(equalToConstant: self.view2.frame.height).isActive = true
+        
+        self.view2.addSubview(profileLabel)
+        profileLabel.text = "HOME"
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 35.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
+        
         addButton.isHidden = false
                 
         self.view.addSubview(spinner)
@@ -97,6 +136,27 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
             let jobNo = snapshot?.count
             self.job = "\(jobNo!)"
+        }
+        
+        let currentDate = Date()
+        
+        Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
+            let documents = snapshot?.documents
+            for document in documents! {
+                let documentId = document.documentID
+                let jobTime = document.data()["time"] as? Timestamp
+                let name = document.data()["companyName"] as? String
+                
+                self.companyName.text = name!
+                
+                let diff = Calendar.current.dateComponents([.day], from: (jobTime?.dateValue())!, to: currentDate)
+                
+                let daysLeft = (diff.day)!
+                
+                if daysLeft > 45 {
+                    Firestore.firestore().collection("job").document(documentId).delete()
+                }
+            }
         }
         
     }
@@ -138,6 +198,20 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         label.removeFromSuperview()
         addButton.isHidden = true
         spinner.startAnimating()
+        
+        self.view2.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 80.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view2.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.profileLabel.text = "PROFILE"
+        
+        self.view2.addSubview(verticalLineView)
+        verticalLineView.translatesAutoresizingMaskIntoConstraints = false
+        verticalLineView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+        verticalLineView.widthAnchor.constraint(equalToConstant: 0.7).isActive = true
+        verticalLineView.heightAnchor.constraint(equalToConstant: self.view2.frame.height).isActive = true
 
         collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
             let data = snapshot?.data()
@@ -156,8 +230,8 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             self.view2.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 60.0).isActive = true
-            self.tableView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 81.0).isActive = true
+            self.tableView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 1.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view2.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view2.trailingAnchor, constant: 0.0).isActive = true
             

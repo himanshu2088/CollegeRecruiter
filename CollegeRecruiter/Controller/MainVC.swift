@@ -11,6 +11,26 @@ import Firebase
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let verticalLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let profileLabel: UILabel = {
+        let label = UILabel()
+        label.text = "HOME"
+        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.textColor = .lightGray
+        return label
+    }()
+    
     @IBOutlet weak var leading: NSLayoutConstraint!
     @IBOutlet weak var trailing: NSLayoutConstraint!
     @IBOutlet weak var view2: UIView!
@@ -25,6 +45,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var jobsCompanyArray = [String]()
     var jobsSalaryArray = [String]()
     var jobsDocumentIdArray = [String]()
+    var jobTime = [Int]()
     
     let homeView: UIView = {
         let view = UIView()
@@ -93,7 +114,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UINib(nibName: "StudentJobs", bundle: nil), forCellReuseIdentifier: "studentJobs")
-        tableView.rowHeight = 105.0
+        tableView.rowHeight = 125.0
         tableView.allowsSelection = true
         tableView.backgroundColor = .white
         return tableView
@@ -164,6 +185,22 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         spinner.startAnimating()
         
+        self.view2.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 80.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view2.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.profileLabel.text = "ALL JOBS"
+        
+        self.view2.addSubview(verticalLineView)
+        verticalLineView.translatesAutoresizingMaskIntoConstraints = false
+        verticalLineView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+        verticalLineView.widthAnchor.constraint(equalToConstant: 0.7).isActive = true
+        verticalLineView.heightAnchor.constraint(equalToConstant: self.view2.frame.height).isActive = true
+        
+        let currentDate = Date()
+        
         Firestore.firestore().collection("job").whereField("branch", isEqualTo: field).getDocuments { (snapshot, error) in
             let documents = snapshot?.documents
             for document in documents! {
@@ -171,6 +208,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 let jobTitle = document.data()["jobTitle"] as? String
                 let jobCompany = document.data()["companyName"] as? String
                 let jobSalary = document.data()["salary"] as? String
+                let jobTime = document.data()["time"] as? Timestamp
+                
+                let diff = Calendar.current.dateComponents([.day], from: (jobTime?.dateValue())!, to: currentDate)
+                
+                let daysLeft = (diff.day)!
+                
+                self.jobTime.append(daysLeft)
                 self.jobsDocumentIdArray.append(documentId)
                 self.jobTitleArray.append(jobTitle!)
                 self.jobsCompanyArray.append(jobCompany!)
@@ -182,8 +226,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.view2.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 60.0).isActive = true
-            self.tableView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 81.0).isActive = true
+            self.tableView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 1.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view2.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view2.trailingAnchor, constant: 0.0).isActive = true
 
@@ -203,6 +247,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.jobTitle.text = jobTitleArray[indexPath.row]
             cell.companyName.text = jobsCompanyArray[indexPath.row]
             cell.salary.text = "Salary " + jobsSalaryArray[indexPath.row]
+            
+            if jobTime[indexPath.row] > 0 {
+                cell.days.text = "Posted " + "\(jobTime[indexPath.row])" + " day ago"
+            } else {
+                cell.days.text = "Posted today"
+            }
+            
             return cell
         } else {
             return UITableViewCell()
@@ -239,6 +290,24 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
+        
+        self.view2.addSubview(lineView)
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        lineView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 80.0).isActive = true
+        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
+        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
+        
+        self.view2.addSubview(verticalLineView)
+        verticalLineView.translatesAutoresizingMaskIntoConstraints = false
+        verticalLineView.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 0.0).isActive = true
+        verticalLineView.widthAnchor.constraint(equalToConstant: 0.7).isActive = true
+        verticalLineView.heightAnchor.constraint(equalToConstant: self.view2.frame.height).isActive = true
+        
+        self.view2.addSubview(profileLabel)
+        profileLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileLabel.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 35.0).isActive = true
+        profileLabel.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
         
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
