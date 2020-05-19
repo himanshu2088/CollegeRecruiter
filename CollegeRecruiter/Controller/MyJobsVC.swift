@@ -32,7 +32,7 @@ class MyJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel()
         label.text = "LOGIN"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     

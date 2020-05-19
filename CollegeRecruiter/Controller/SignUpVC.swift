@@ -33,7 +33,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         let label = UILabel()
         label.text = "SIGNUP"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -55,74 +55,86 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     let enrollmentTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Enrollment Number"
+        textField.placeholder = "Enrollment Number*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let admissionTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Admission Number"
+        textField.placeholder = "Admission Number*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let nameTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Name"
+        textField.placeholder = "Name*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let fatherTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Father's Name"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let motherTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Mother's Name"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let branchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Branch"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.placeholder = "Branch*"
         return textField
     }()
     
     let batchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Batch/Section"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let genderTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Gender"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let dobTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.placeholder = "Date of Birth (dd/mm/yyyy)"
         return textField
     }()
     
     let categoryTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.placeholder = "Category"
         return textField
     }()
     
     let emailTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Email"
+        textField.placeholder = "Email*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.keyboardType = .emailAddress
         return textField
     }()
     
     let mobileTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Mobile Number"
+        textField.placeholder = "Mobile Number*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.keyboardType = .numberPad
         return textField
     }()
@@ -130,38 +142,44 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let parentMobileTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Parent's Mobile Number"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.keyboardType = .numberPad
         return textField
     }()
     
     let primaryAddressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Primary Address"
+        textField.placeholder = "Primary Address*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let currentAddressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Current Address"
+        textField.placeholder = "Current Address*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let cityTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "City"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let passwordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Password"
+        textField.placeholder = "Password*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
     
     let confirmPasswordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Confirm Password"
+        textField.placeholder = "Confirm Password*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -170,19 +188,18 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(toNextPage), for: .touchUpInside)
         return button
     }()
     
     @objc func toNextPage() {
 
-        guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let fatherName = fatherTextField.text, let motherName = motherTextField.text, let branch = branchTextField.text, let batch = batchTextField.text, let gender = genderTextField.text, let dob = dobTextField.text, let category = categoryTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let parentMobile = parentMobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let city = cityTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
+        guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let branch = branchTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
         
-        if enrollment == "" || admission == "" || name == "" || fatherName == "" || motherName == "" || branch == "" || batch == "" || gender == "" || dob == "" || category == "" || email == "" || mobile == "" || parentMobile == "" || primaryAdd == "" || currentAdd == "" || city == "" || password == "" || confirmPassword == "" {
-            let alert = UIAlertController(title: "Error", message: "Please enter all the fields to continue.", preferredStyle: .alert)
+        if enrollment == "" || admission == "" || name == "" || branch == "" || email == "" || mobile == "" || primaryAdd == "" || currentAdd == "" || password == "" || confirmPassword == "" {
+            let alert = UIAlertController(title: "Error", message: "Please enter all the mandatory fields.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)

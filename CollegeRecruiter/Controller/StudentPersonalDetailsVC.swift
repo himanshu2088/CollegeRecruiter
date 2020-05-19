@@ -32,7 +32,7 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
         let label = UILabel()
         label.text = "PERSONAL DETAILS"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -51,7 +51,7 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UINib(nibName: "StudentPersonalDetailsCell", bundle: nil), forCellReuseIdentifier: "studentPersonalDetailsCell")
+        tableView.register(UINib(nibName: "AppliedStudentsDataCell", bundle: nil), forCellReuseIdentifier: "appliedStudentsDataCell")
         tableView.allowsSelection = false
         tableView.rowHeight = 150
         tableView.backgroundColor = .white
@@ -134,7 +134,7 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 61.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 90.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
@@ -151,7 +151,7 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "studentPersonalDetailsCell", for: indexPath) as? StudentPersonalDetailsCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "appliedStudentsDataCell", for: indexPath) as? AppliedStudentsDataCell {
             cell.key.text = keyArray[indexPath.row]
             cell.value.text = valueArray[indexPath.row]
             return cell

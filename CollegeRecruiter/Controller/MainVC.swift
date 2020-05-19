@@ -27,7 +27,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel()
         label.text = "HOME"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -68,12 +68,14 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let name: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir-Medium", size: 30.0)
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
     let admissionNo: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         label.text = "Admission No."
         return label
     }()
@@ -81,6 +83,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let branch: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         label.text = "Branch"
         return label
     }()
@@ -88,6 +91,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let mobile: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         label.text = "Mobile No."
         return label
     }()
@@ -121,7 +125,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }()
     
     @IBAction func logoutTapped(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
     @IBAction func menuTap(_ sender: UIButton) {
@@ -308,6 +312,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         profileLabel.translatesAutoresizingMaskIntoConstraints = false
         profileLabel.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 35.0).isActive = true
         profileLabel.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
+        profileLabel.text = "HOME"
         
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false

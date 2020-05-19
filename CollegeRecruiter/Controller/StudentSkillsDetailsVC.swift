@@ -32,7 +32,7 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
         let label = UILabel()
         label.text = "EXPERIENCE DETAILS"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -51,7 +51,7 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UINib(nibName: "StudentSkillsDetailsCell", bundle: nil), forCellReuseIdentifier: "studentSkillsDetailsCell")
+        tableView.register(UINib(nibName: "AppliedStudentsDataCell", bundle: nil), forCellReuseIdentifier: "appliedStudentsDataCell")
         tableView.allowsSelection = false
         tableView.rowHeight = 180
         tableView.backgroundColor = .white
@@ -106,7 +106,7 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 61.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
@@ -123,7 +123,7 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "studentSkillsDetailsCell", for: indexPath) as? StudentSkillsDetailsCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "appliedStudentsDataCell", for: indexPath) as? AppliedStudentsDataCell {
             cell.key.text = keyArray[indexPath.row]
             cell.value.text = valueArray[indexPath.row]
             return cell

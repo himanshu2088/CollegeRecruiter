@@ -22,7 +22,7 @@ class SkillDetailsVC: UIViewController {
         let label = UILabel()
         label.text = "EXPERIENCE DETAILS"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -41,30 +41,35 @@ class SkillDetailsVC: UIViewController {
     let label: UILabel = {
         let label = UILabel()
         label.text = "Experience Details"
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         label.font = UIFont(name: "Avenir-Medium", size: 30.0)
         return label
     }()
     
     let skillsTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Skills"
+        textField.placeholder = "Skills*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let internshipDetailsTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Internship Details"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let aadharNumberTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Aadhar Number"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let passportNumberTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.placeholder = "Passport Number"
         return textField
     }()
@@ -73,9 +78,8 @@ class SkillDetailsVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("SIGN UP", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         return button
     }()
@@ -83,8 +87,8 @@ class SkillDetailsVC: UIViewController {
     @objc func registerUser() {
         guard let skills = skillsTextField.text, let internshipDetails = internshipDetailsTextField.text, let aadharNumber = aadharNumberTextField.text, let passportNumber = passportNumberTextField.text else { return }
         
-        if skills == "" || internshipDetails == "" || aadharNumber == "" || passportNumber == "" {
-            let alert = UIAlertController(title: "Error", message: "Please enter all the fields to continue.", preferredStyle: .alert)
+        if skills == "" {
+            let alert = UIAlertController(title: "Error", message: "Please enter all the mandatory fields.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
@@ -114,9 +118,9 @@ class SkillDetailsVC: UIViewController {
                             self.spinner.stopAnimating()
                             let alert = UIAlertController(title: "Success", message: "Account created successfully. Check your Gmail to verify your account. An email verification link is sent there.", preferredStyle: .alert)
                             let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                              let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                              let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
-                              self.present(nextViewController!, animated:true, completion:nil)
+//                              let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//                              let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
+//                              self.present(nextViewController!, animated:true, completion:nil)
                             })
                             alert.addAction(action)
                             self.present(alert, animated: true, completion: nil)

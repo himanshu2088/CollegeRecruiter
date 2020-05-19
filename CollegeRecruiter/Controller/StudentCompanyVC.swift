@@ -7,128 +7,276 @@
 //
 
 import UIKit
+import SkyFloatingLabelTextField
+import Firebase
 
 class StudentCompanyVC: UIViewController {
     
-    let lineView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        return view
-    }()
+    var studentEmailArray = [String]()
+    var companyEmailArray = [String]()
     
-    let profileLabel: UILabel = {
-        let label = UILabel()
-        label.text = "HOME"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
-        return label
+    let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.color = .black
+        return spinner
     }()
     
     let label: UILabel = {
         let label = UILabel()
-        label.text = "College \nRecruitment"
-        label.textAlignment = .center
-        label.numberOfLines = 2
-        label.font = UIFont(name: "Avenir-Medium", size: 33.0)
+        label.text = "College "
+        label.textColor = .black
+        label.font = UIFont(name: "Noteworthy-Bold", size: 35.0)
         return label
     }()
     
-    let imageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "employee.png")
-        return view
+    let label2: UILabel = {
+        let label = UILabel()
+        label.text = "Recruitment"
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        label.font = UIFont(name: "Noteworthy-Bold", size: 35.0)
+        return label
     }()
     
-    let imageView2: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "cap.png")
-        return view
+    let emailTextField: SkyFloatingLabelTextField = {
+        let textField = SkyFloatingLabelTextField()
+        textField.placeholder = "Email"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        textField.keyboardType = .emailAddress
+        return textField
     }()
     
-    let companyBtn: UIButton = {
+    let passwordTextField: SkyFloatingLabelTextField = {
+        let textField = SkyFloatingLabelTextField()
+        textField.placeholder = "Password"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        textField.isSecureTextEntry = true
+        return textField
+    }()
+    
+    let loginBtn: UIButton = {
         let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(toCompanyLoginVC), for: .touchUpInside)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.setTitle("Log in as company", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 22.0)
-        button.tintColor = .black
+        button.setTitle("LOGIN", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.tintColor = .white
         return button
     }()
     
-    @objc func toCompanyLoginVC() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-        self.present(nextViewController!, animated:true, completion:nil)
-    }
-    
-    let studentBtn: UIButton = {
-        let button = UIButton(type: .system)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.setTitle("Log in as student", for: .normal)
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(toStudentLoginVC), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func toStudentLoginVC() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
-        self.present(nextViewController!, animated:true, completion:nil)
-    }
+    @objc func login() {
+        if emailTextField.text == "" || passwordTextField.text == "" {
+            let alert = UIAlertController(title: "Error", message: "Please fill all the fields to continue login.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+            
+        }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
+        spinner.startAnimating()
+        
+        guard let email = emailTextField.text , let password = passwordTextField.text else { return }
+        
+        Firestore.firestore().collection("company").getDocuments { (snapshot, error) in
+            if let error = error {
+                self.spinner.stopAnimating()
+                print(error.localizedDescription)
+            }
+            let documents = snapshot?.documents
+            for document in documents! {
+                let data = document.data()
+                let usedEmail = data["email"] as? String ?? ""
+                self.companyEmailArray.append(usedEmail)
+            }
+            
+        Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
+            if let error = error {
+                self.spinner.stopAnimating()
+                print(error.localizedDescription)
+            }
+            let documents = snapshot?.documents
+            for document in documents! {
+                let data = document.data()
+                let usedEmail = data["email"] as? String ?? ""
+                self.studentEmailArray.append(usedEmail)
+            }
+        }
+            
+            if self.companyEmailArray.contains(email) {
+                Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                    if (user != nil) {
+                        let currentUser = Auth.auth().currentUser
+                        switch currentUser?.isEmailVerified {
+                        case true:
+                            self.spinner.stopAnimating()
+                            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyMainVC") as? CompanyMainVC
+                            self.present(nextViewController!, animated:true, completion:nil)
+                        case false:
+                            currentUser?.sendEmailVerification(completion: { (error) in
+                                if let error = error {
+                                    self.spinner.stopAnimating()
+                                    print("Error while sending email verification, \(error.localizedDescription)")
+                                }
+                                self.spinner.stopAnimating()
+                                let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alert.addAction(action)
+                                self.present(alert, animated: true, completion: nil)
+                            })
+                        default:
+                            print("verified")
+                        }
+                    } else {
+                        self.spinner.stopAnimating()
+                        let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            } else if self.studentEmailArray.contains(email) {
+                Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                    if (user != nil) {
+                        let currentUser = Auth.auth().currentUser
+                        switch currentUser?.isEmailVerified {
+                        case true:
+                            self.spinner.stopAnimating()
+                            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainVC") as? MainVC
+                            self.present(nextViewController!, animated:true, completion:nil)
+                        case false:
+                            currentUser?.sendEmailVerification(completion: { (error) in
+                                if let error = error {
+                                    self.spinner.stopAnimating()
+                                    print("Error while sending email verification, \(error.localizedDescription)")
+                                }
+                                self.spinner.stopAnimating()
+                                let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
+                                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alert.addAction(action)
+                                self.present(alert, animated: true, completion: nil)
+                            })
+                        default:
+                            print("verified")
+                        }
+                    } else {
+                        self.spinner.stopAnimating()
+                        let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                self.spinner.stopAnimating()
+                let alert = UIAlertController(title: "Error", message: "This email do not corresponds to our databse. Please check your email and try again.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
     }
+    
+    let forgotPassBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Forgot Password?", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 18.0)
+        button.tintColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return button
+    }()
+    
+    @objc func forgotPass() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyForgotPassVC") as? CompanyForgotPassVC
+        self.present(nextViewController!, animated:true, completion:nil)
+    }
+    
+    let signUplabel: UILabel = {
+        let label = UILabel()
+        label.text = "Don't have an account? "
+        label.font = UIFont(name: "Avenir", size: 18.0)
+        label.isUserInteractionEnabled = true
+        return label
+    }()
+    
+    let signUpBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Signup here", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 18.0)
+        button.tintColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return button
+    }()
+    
+//    @objc func toCompanyLoginVC() {
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
+//        self.present(nextViewController!, animated:true, completion:nil)
+//    }
+//
+//    @objc func toStudentLoginVC() {
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
+//        self.present(nextViewController!, animated:true, completion:nil)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(lineView)
-        lineView.translatesAutoresizingMaskIntoConstraints = false
-        lineView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60.0).isActive = true
-        lineView.widthAnchor.constraint(equalToConstant: self.view.frame.width).isActive = true
-        lineView.heightAnchor.constraint(equalToConstant: 0.7).isActive = true
-        
-        self.view.addSubview(profileLabel)
-        profileLabel.translatesAutoresizingMaskIntoConstraints = false
-        profileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20.0).isActive = true
-        profileLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        self.view.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         
         self.view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
-        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100.0).isActive = true
+        label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: -100.0).isActive = true
         
-        self.view.addSubview(companyBtn)
-        companyBtn.translatesAutoresizingMaskIntoConstraints = false
-        companyBtn.isUserInteractionEnabled = true
-        companyBtn.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 30.0).isActive = true
-        companyBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
-        companyBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-        companyBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        companyBtn.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: self.companyBtn.leadingAnchor, constant: 20.0).isActive = true
-        imageView.centerYAnchor.constraint(equalTo: self.companyBtn.centerYAnchor, constant: 0.0).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        self.view.addSubview(label2)
+        label2.translatesAutoresizingMaskIntoConstraints = false
+        label2.centerYAnchor.constraint(equalTo: label.centerYAnchor, constant: 0.0).isActive = true
+        label2.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 0.0).isActive = true
         
-        self.view.addSubview(studentBtn)
-        studentBtn.translatesAutoresizingMaskIntoConstraints = false
-        studentBtn.isUserInteractionEnabled = true
-        studentBtn.topAnchor.constraint(equalTo: companyBtn.bottomAnchor, constant: 20.0).isActive = true
-        studentBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-        studentBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
-        studentBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-        studentBtn.addSubview(imageView2)
-        imageView2.translatesAutoresizingMaskIntoConstraints = false
-        imageView2.leadingAnchor.constraint(equalTo: self.studentBtn.leadingAnchor, constant: 25.0).isActive = true
-        imageView2.centerYAnchor.constraint(equalTo: self.studentBtn.centerYAnchor, constant: 0.0).isActive = true
-        imageView2.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
-        imageView2.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        self.view.addSubview(emailTextField)
+        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        emailTextField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20.0).isActive = true
+        emailTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        emailTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+      
+        self.view.addSubview(passwordTextField)
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 20.0).isActive = true
+        passwordTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        passwordTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        
+        self.view.addSubview(forgotPassBtn)
+        forgotPassBtn.translatesAutoresizingMaskIntoConstraints = false
+        forgotPassBtn.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20.0).isActive = true
+        forgotPassBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        forgotPassBtn.addTarget(self, action: #selector(forgotPass), for: .touchUpInside)
+
+        self.view.addSubview(loginBtn)
+        loginBtn.translatesAutoresizingMaskIntoConstraints = false
+        loginBtn.topAnchor.constraint(equalTo: forgotPassBtn.bottomAnchor, constant: 20.0).isActive = true
+        loginBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        loginBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        loginBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        loginBtn.addTarget(self, action: #selector(login), for: .touchUpInside)
+
+        self.view.addSubview(signUplabel)
+        signUplabel.translatesAutoresizingMaskIntoConstraints = false
+        signUplabel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30.0).isActive = true
+        signUplabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: -60.0).isActive = true
+
+        self.view.addSubview(signUpBtn)
+        signUpBtn.translatesAutoresizingMaskIntoConstraints = false
+        signUpBtn.centerYAnchor.constraint(equalTo: signUplabel.centerYAnchor, constant: 0.0).isActive = true
+        signUpBtn.leadingAnchor.constraint(equalTo: signUplabel.trailingAnchor, constant: 0.0).isActive = true
+        
         
     }
 

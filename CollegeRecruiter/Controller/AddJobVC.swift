@@ -33,7 +33,7 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         let label = UILabel()
         label.text = "ADD JOB"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -52,23 +52,27 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let titleTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Job Title"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let descriptionTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Job Description"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let requirementsTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Job Requirements"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let responsibilitiesTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.placeholder = "Job Responsibilities"
         return textField
     }()
@@ -76,6 +80,7 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let branchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Branch"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         
 //        asdasdasd
         return textField
@@ -84,24 +89,28 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let salaryTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Salary Range"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let tenthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "10th CGPA/%"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let twelfthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "12/Diploma CGPA/%"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let graduationCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Graduation CGPA/%"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
@@ -109,9 +118,8 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         let button = UIButton(type: .system)
         button.setTitle("POST JOB", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(postJob), for: .touchUpInside)
         return button
     }()

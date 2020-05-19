@@ -27,7 +27,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let label = UILabel()
         label.text = "HOME"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -47,7 +47,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UINib(nibName: "CompanyProfileCell", bundle: nil), forCellReuseIdentifier: "companyProfileCell")
+        tableView.register(UINib(nibName: "AppliedStudentsDataCell", bundle: nil), forCellReuseIdentifier: "appliedStudentsDataCell")
         tableView.allowsSelection = false
         tableView.rowHeight = 150
         tableView.backgroundColor = .white
@@ -73,6 +73,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let label = UILabel()
         label.text = "Press '+' button to create a new job."
         label.font = UIFont(name: "Avenir-Medium", size: 20.0)
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         label.numberOfLines = 2
         return label
     }()
@@ -247,7 +248,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "companyProfileCell", for: indexPath) as? CompanyProfileCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "appliedStudentsDataCell", for: indexPath) as? AppliedStudentsDataCell {
             cell.key.text = keyArray[indexPath.row]
             cell.value.text = valueArray[indexPath.row]
             return cell
@@ -279,12 +280,7 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func logoutBtnPressed(_ sender: UIButton) {
-        leading.constant = 0
-        trailing.constant = 0
-        
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-        self.present(nextViewController!, animated:true, completion:nil)
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
 }

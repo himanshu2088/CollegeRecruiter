@@ -33,7 +33,7 @@ class CompanySignUpVC: UIViewController {
         let label = UILabel()
         label.text = "SIGNUP"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -48,45 +48,52 @@ class CompanySignUpVC: UIViewController {
     
     let companyNameTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Company Name"
+        textField.placeholder = "Company Name*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let addressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Address"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let cityTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "City"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let contactTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Contact Number"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return textField
     }()
     
     let emailTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Company Email"
+        textField.placeholder = "Company Email*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.keyboardType = .emailAddress
         return textField
     }()
     
     let passwordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Password"
+        textField.placeholder = "Password*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
     
     let confirmPasswordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Confirm Password"
+        textField.placeholder = "Confirm Password*"
+        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -95,18 +102,17 @@ class CompanySignUpVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("SIGN UP", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         return button
     }()
     
     @objc func registerUser() {
-        guard let companyName = companyNameTextField.text, let address = addressTextField.text, let city = cityTextField.text, let contact = contactTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
+        guard let companyName = companyNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
             
-            if companyName == "" || address == "" || city == "" || contact == "" || email == "" || password == "" || confirmPassword == "" {
-                let alert = UIAlertController(title: "Error", message: "Please enter all the fields to continue.", preferredStyle: .alert)
+            if companyName == "" || email == "" || password == "" || confirmPassword == "" {
+                let alert = UIAlertController(title: "Error", message: "Please enter all the mandatory fields.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)
@@ -199,9 +205,9 @@ class CompanySignUpVC: UIViewController {
                                 self.spinner.stopAnimating()
                                 let alert = UIAlertController(title: "Success", message: "Account created successfully. Check your Gmail to verify your account. An email verification link is sent there.", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                                  let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                                  let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-                                  self.present(nextViewController!, animated:true, completion:nil)
+//                                  let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//                                  let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
+//                                  self.present(nextViewController!, animated:true, completion:nil)
                                 })
                                 alert.addAction(action)
                                 self.present(alert, animated: true, completion: nil)

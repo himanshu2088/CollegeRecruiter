@@ -33,11 +33,12 @@ class CompanyForgotPassVC: UIViewController {
         let label = UILabel()
         label.text = "RESET PASSWORD"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
-    var emailArray = [String]()
+    var companyEmailArray = [String]()
+    var studentEmailArray = [String]()
     
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -55,10 +56,13 @@ class CompanyForgotPassVC: UIViewController {
     let resetPassBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("RESET PASSWORD", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.tintColor = .white
         button.addTarget(self, action: #selector(resetPass), for: .touchUpInside)
         return button
     }()
@@ -84,32 +88,41 @@ class CompanyForgotPassVC: UIViewController {
             for document in documents! {
                 let data = document.data()
                 let usedEmail = data["email"] as? String ?? ""
-                self.emailArray.append(usedEmail)
+                self.companyEmailArray.append(usedEmail)
             }
-            if !self.emailArray.contains(self.emailTextField.text!) {
-                self.spinner.stopAnimating()
-                let alert = UIAlertController(title: "Error", message: "This email does not corresponds to our database. Please check your email.", preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
-                return
-            }
-            else{
-                Auth.auth().sendPasswordReset(withEmail: (self.emailTextField.text)!) { (error) in
-                    if let error = error {
-                        self.spinner.stopAnimating()
-                        print("Error while sending reset link, \(error.localizedDescription)")
-                        return
-                    } else {
-                        self.spinner.stopAnimating()
-                        let alert = UIAlertController(title: "Success", message: "Password reset link has been sent to your Gmail. Please reset your password and then login.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                          let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                          let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-                          self.present(nextViewController!, animated:true, completion:nil)
-                        })
-                        alert.addAction(action)
-                        self.present(alert, animated: true, completion: nil)
+            Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
+                if let error = error {
+                    self.spinner.stopAnimating()
+                    print(error.localizedDescription)
+                }
+                let documents = snapshot?.documents
+                for document in documents! {
+                    let data = document.data()
+                    let usedEmail = data["email"] as? String ?? ""
+                    self.companyEmailArray.append(usedEmail)
+                }
+                if !self.companyEmailArray.contains(self.emailTextField.text!) {
+                    self.spinner.stopAnimating()
+                    let alert = UIAlertController(title: "Error", message: "This email do not corresponds to our database. Please check your email.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                    return
+                } else {
+                    Auth.auth().sendPasswordReset(withEmail: (self.emailTextField.text)!) { (error) in
+                        if let error = error {
+                            self.spinner.stopAnimating()
+                            print("Error while sending reset link, \(error.localizedDescription)")
+                            return
+                        } else {
+                            self.spinner.stopAnimating()
+                            let alert = UIAlertController(title: "Success", message: "Password reset link has been sent to your Gmail. Please reset your password and then login.", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                                self.dismiss(animated: true, completion: nil)
+                            })
+                            alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
                 }
             }

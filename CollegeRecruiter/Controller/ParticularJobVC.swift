@@ -32,7 +32,7 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let label = UILabel()
         label.text = "PROFILE"
         label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = .lightGray
+        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
         return label
     }()
     
@@ -51,7 +51,7 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UINib(nibName: "StudentParticularJobCell", bundle: nil), forCellReuseIdentifier: "studentParticularJobCell")
+        tableView.register(UINib(nibName: "AppliedStudentsDataCell", bundle: nil), forCellReuseIdentifier: "appliedStudentsDataCell")
         tableView.allowsSelection = false
         tableView.rowHeight = 150
         tableView.backgroundColor = .white
@@ -62,9 +62,8 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let button = UIButton(type: .system)
         button.setTitle("Apply for Job", for: .normal)
         button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.layer.borderColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
-        button.layer.borderWidth = 1.0
-        button.tintColor = .black
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.tintColor = .white
         return button
     }()
     
@@ -173,7 +172,7 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "studentParticularJobCell", for: indexPath) as? StudentParticularJobCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "appliedStudentsDataCell", for: indexPath) as? AppliedStudentsDataCell {
             cell.key.text = keyArray[indexPath.row]
             cell.value.text = valueArray[indexPath.row]
             return cell
