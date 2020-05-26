@@ -32,13 +32,14 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "ADD JOB"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
     var companyName: String!
     let branchData = ["Computer Science", "Mechanical", "Civil", "Electronics and Communications"]
+    let semesterData = ["7", "8"]
     
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("company")
@@ -49,76 +50,91 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         return spinner
     }()
     
+    let scrollView: UIScrollView = {
+        let s = UIScrollView()
+        s.translatesAutoresizingMaskIntoConstraints = false
+        return s
+    }()
+    
     let titleTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Job Title"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.placeholder = "Job Title*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let descriptionTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Job Description"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let requirementsTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Job Requirements"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.placeholder = "Job Requirements*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let responsibilitiesTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Job Responsibilities"
         return textField
     }()
     
     let branchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Branch"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
-        
-//        asdasdasd
+        textField.placeholder = "Branch*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let salaryTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Salary Range"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return textField
+    }()
+    
+    let semesterTextField: SkyFloatingLabelTextField = {
+        let textField = SkyFloatingLabelTextField()
+        textField.placeholder = "Semester*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let tenthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "10th CGPA/%"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "12/Diploma CGPA/%"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let graduationCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Graduation CGPA/%"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.placeholder = "Graduation CGPA/%*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let postBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("POST JOB", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         button.addTarget(self, action: #selector(postJob), for: .touchUpInside)
         return button
@@ -126,9 +142,9 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @objc func postJob() {
 
-        guard let title = titleTextField.text, let description = descriptionTextField.text, let requirements = requirementsTextField.text, let responsibilities = responsibilitiesTextField.text, let salary = salaryTextField.text, let tenthCGPA = tenthCGPATextField.text, let twelfthCGPA = twelfthCGPATextField.text, let graduationCGPA = graduationCGPATextField.text, let companyEmail = Auth.auth().currentUser?.email, let branch = branchTextField.text else { return }
+        guard let title = titleTextField.text, let description = descriptionTextField.text, let requirements = requirementsTextField.text, let responsibilities = responsibilitiesTextField.text, let salary = salaryTextField.text, let semester = semesterTextField.text, let tenthCGPA = tenthCGPATextField.text, let twelfthCGPA = twelfthCGPATextField.text, let graduationCGPA = graduationCGPATextField.text, let companyEmail = Auth.auth().currentUser?.email, let branch = branchTextField.text else { return }
         
-        if title == "" || description == "" || requirements == "" || responsibilities == "" || salary == "" || tenthCGPA == "" || twelfthCGPA == "" || graduationCGPA == "" || branch == "" {
+        if title == "" || requirements == "" || graduationCGPA == "" || branch == "" || semester == "" {
             let alert = UIAlertController(title: "Error", message: "Please enter all the fields to continue.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
@@ -144,6 +160,7 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
                 "jobresponsibilities" : responsibilities,
                 "branch" : branch,
                 "salary" : salary,
+                "semester" : semester,
                 "tenthCGPA" : tenthCGPA,
                 "twelfthCGPA" : twelfthCGPA,
                 "graduationCGPA" : graduationCGPA,
@@ -167,9 +184,14 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         let branchPicker = UIPickerView()
         branchTextField.inputView = branchPicker
         branchPicker.delegate = self
+        
+        let semesterPicker = UIPickerView()
+        semesterTextField.inputView = semesterPicker
+        semesterPicker.delegate = self
         
         collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
             let data = snapshot?.data()
@@ -201,76 +223,91 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
+        self.view.addSubview(scrollView)
 
-        self.view.addSubview(titleTextField)
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+
+        scrollView.addSubview(titleTextField)
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.isUserInteractionEnabled = true
-        titleTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0).isActive = true
-        titleTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        titleTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0.0).isActive = true
+        titleTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         titleTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(descriptionTextField)
+        scrollView.addSubview(descriptionTextField)
         descriptionTextField.translatesAutoresizingMaskIntoConstraints = false
         descriptionTextField.isUserInteractionEnabled = true
         descriptionTextField.topAnchor.constraint(equalTo: self.titleTextField.bottomAnchor, constant: 10.0).isActive = true
-        descriptionTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        descriptionTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         descriptionTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(requirementsTextField)
+        scrollView.addSubview(requirementsTextField)
         requirementsTextField.translatesAutoresizingMaskIntoConstraints = false
         requirementsTextField.isUserInteractionEnabled = true
         requirementsTextField.topAnchor.constraint(equalTo: self.descriptionTextField.bottomAnchor, constant: 10.0).isActive = true
-        requirementsTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        requirementsTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         requirementsTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(responsibilitiesTextField)
+        scrollView.addSubview(responsibilitiesTextField)
         responsibilitiesTextField.translatesAutoresizingMaskIntoConstraints = false
         responsibilitiesTextField.isUserInteractionEnabled = true
         responsibilitiesTextField.topAnchor.constraint(equalTo: self.requirementsTextField.bottomAnchor, constant: 10.0).isActive = true
-        responsibilitiesTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        responsibilitiesTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         responsibilitiesTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(branchTextField)
+        scrollView.addSubview(branchTextField)
         branchTextField.translatesAutoresizingMaskIntoConstraints = false
         branchTextField.isUserInteractionEnabled = true
         branchTextField.topAnchor.constraint(equalTo: self.responsibilitiesTextField.bottomAnchor, constant: 10.0).isActive = true
-        branchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        branchTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         branchTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(salaryTextField)
+        scrollView.addSubview(salaryTextField)
         salaryTextField.translatesAutoresizingMaskIntoConstraints = false
         salaryTextField.isUserInteractionEnabled = true
         salaryTextField.topAnchor.constraint(equalTo: self.branchTextField.bottomAnchor, constant: 10.0).isActive = true
-        salaryTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        salaryTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         salaryTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(tenthCGPATextField)
+        scrollView.addSubview(semesterTextField)
+        semesterTextField.translatesAutoresizingMaskIntoConstraints = false
+        semesterTextField.isUserInteractionEnabled = true
+        semesterTextField.topAnchor.constraint(equalTo: self.salaryTextField.bottomAnchor, constant: 10.0).isActive = true
+        semesterTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
+        semesterTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        
+        scrollView.addSubview(tenthCGPATextField)
         tenthCGPATextField.translatesAutoresizingMaskIntoConstraints = false
         tenthCGPATextField.isUserInteractionEnabled = true
-        tenthCGPATextField.topAnchor.constraint(equalTo: self.salaryTextField.bottomAnchor, constant: 10.0).isActive = true
-        tenthCGPATextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        tenthCGPATextField.topAnchor.constraint(equalTo: self.semesterTextField.bottomAnchor, constant: 10.0).isActive = true
+        tenthCGPATextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         tenthCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(twelfthCGPATextField)
+        scrollView.addSubview(twelfthCGPATextField)
         twelfthCGPATextField.translatesAutoresizingMaskIntoConstraints = false
         twelfthCGPATextField.isUserInteractionEnabled = true
         twelfthCGPATextField.topAnchor.constraint(equalTo: self.tenthCGPATextField.bottomAnchor, constant: 10.0).isActive = true
-        twelfthCGPATextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        twelfthCGPATextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         twelfthCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(graduationCGPATextField)
+        scrollView.addSubview(graduationCGPATextField)
         graduationCGPATextField.translatesAutoresizingMaskIntoConstraints = false
         graduationCGPATextField.isUserInteractionEnabled = true
         graduationCGPATextField.topAnchor.constraint(equalTo: self.twelfthCGPATextField.bottomAnchor, constant: 10.0).isActive = true
-        graduationCGPATextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0).isActive = true
+        graduationCGPATextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         graduationCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        view.addSubview(postBtn)
+        scrollView.addSubview(postBtn)
         postBtn.translatesAutoresizingMaskIntoConstraints = false
         postBtn.isUserInteractionEnabled = true
         postBtn.topAnchor.constraint(equalTo: self.graduationCGPATextField.bottomAnchor, constant: 15.0).isActive = true
-        postBtn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0).isActive = true
+        postBtn.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
         postBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        postBtn.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -30.0).isActive = true
         postBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
     }
     
@@ -280,15 +317,39 @@ class AddJobVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if semesterTextField.isEditing == true {
+            return semesterData.count
+        }
+        else if branchTextField.isEditing == true {
             return branchData.count
+        }
+        else {
+            return branchData.count
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if semesterTextField.isEditing == true {
+            return semesterData[row]
+        }
+        else if branchTextField.isEditing == true {
             return branchData[row]
+        }
+        else {
+            return branchData[row]
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if semesterTextField.isEditing == true {
+            semesterTextField.text = semesterData[row]
+        }
+        else if branchTextField.isEditing == true {
             branchTextField.text = branchData[row]
+        }
+        else {
+            branchTextField.text = branchData[row]
+        }
     }
 
 }

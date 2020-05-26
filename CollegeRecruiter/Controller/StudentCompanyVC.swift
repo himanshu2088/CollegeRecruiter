@@ -72,7 +72,6 @@ class StudentCompanyVC: UIViewController {
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
-            
         }
 
         spinner.startAnimating()
@@ -91,92 +90,95 @@ class StudentCompanyVC: UIViewController {
                 self.companyEmailArray.append(usedEmail)
             }
             
-        Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
-            if let error = error {
-                self.spinner.stopAnimating()
-                print(error.localizedDescription)
+            Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
+                if let error = error {
+                    self.spinner.stopAnimating()
+                    print(error.localizedDescription)
+                }
+                let documents = snapshot?.documents
+                for document in documents! {
+                    let data = document.data()
+                    let usedEmail = data["email"] as? String ?? ""
+                    self.studentEmailArray.append(usedEmail)
+                }
+                
+                if self.companyEmailArray.contains(email) {
+                    Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                        if (user != nil) {
+                            let currentUser = Auth.auth().currentUser
+                            switch currentUser?.isEmailVerified {
+                            case true:
+                                self.spinner.stopAnimating()
+                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyMainVC") as? CompanyMainVC
+                                self.present(nextViewController!, animated:true, completion:nil)
+                            case false:
+                                currentUser?.sendEmailVerification(completion: { (error) in
+                                    if let error = error {
+                                        self.spinner.stopAnimating()
+                                        print("Error while sending email verification, \(error.localizedDescription)")
+                                    }
+                                    self.spinner.stopAnimating()
+                                    let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
+                                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alert.addAction(action)
+                                    self.present(alert, animated: true, completion: nil)
+                                })
+                            default:
+                                self.spinner.stopAnimating()
+                                print("verified")
+                            }
+                        } else {
+                            self.spinner.stopAnimating()
+                            let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                } else if (self.studentEmailArray.contains(email)) {
+                    Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                        if (user != nil) {
+                            let currentUser = Auth.auth().currentUser
+                            switch currentUser?.isEmailVerified {
+                            case true:
+                                self.spinner.stopAnimating()
+                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainVC") as? MainVC
+                                self.present(nextViewController!, animated:true, completion:nil)
+                            case false:
+                                currentUser?.sendEmailVerification(completion: { (error) in
+                                    if let error = error {
+                                        self.spinner.stopAnimating()
+                                        print("Error while sending email verification, \(error.localizedDescription)")
+                                    }
+                                    self.spinner.stopAnimating()
+                                    let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
+                                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alert.addAction(action)
+                                    self.present(alert, animated: true, completion: nil)
+                                })
+                            default:
+                                self.spinner.stopAnimating()
+                                print("verified")
+                            }
+                        } else {
+                            self.spinner.stopAnimating()
+                            let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                            alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                } else {
+                    self.spinner.stopAnimating()
+                    let alert = UIAlertController(title: "Error", message: "This email do not corresponds to our database. Please check your email and try again.", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
-            let documents = snapshot?.documents
-            for document in documents! {
-                let data = document.data()
-                let usedEmail = data["email"] as? String ?? ""
-                self.studentEmailArray.append(usedEmail)
-            }
-        }
             
-            if self.companyEmailArray.contains(email) {
-                Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-                    if (user != nil) {
-                        let currentUser = Auth.auth().currentUser
-                        switch currentUser?.isEmailVerified {
-                        case true:
-                            self.spinner.stopAnimating()
-                            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyMainVC") as? CompanyMainVC
-                            self.present(nextViewController!, animated:true, completion:nil)
-                        case false:
-                            currentUser?.sendEmailVerification(completion: { (error) in
-                                if let error = error {
-                                    self.spinner.stopAnimating()
-                                    print("Error while sending email verification, \(error.localizedDescription)")
-                                }
-                                self.spinner.stopAnimating()
-                                let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alert.addAction(action)
-                                self.present(alert, animated: true, completion: nil)
-                            })
-                        default:
-                            print("verified")
-                        }
-                    } else {
-                        self.spinner.stopAnimating()
-                        let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alert.addAction(action)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            } else if self.studentEmailArray.contains(email) {
-                Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-                    if (user != nil) {
-                        let currentUser = Auth.auth().currentUser
-                        switch currentUser?.isEmailVerified {
-                        case true:
-                            self.spinner.stopAnimating()
-                            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainVC") as? MainVC
-                            self.present(nextViewController!, animated:true, completion:nil)
-                        case false:
-                            currentUser?.sendEmailVerification(completion: { (error) in
-                                if let error = error {
-                                    self.spinner.stopAnimating()
-                                    print("Error while sending email verification, \(error.localizedDescription)")
-                                }
-                                self.spinner.stopAnimating()
-                                let alert = UIAlertController(title: "Error", message: "Please verify your email first. We have sent an email verification link in your Gmail account.", preferredStyle: .alert)
-                                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alert.addAction(action)
-                                self.present(alert, animated: true, completion: nil)
-                            })
-                        default:
-                            print("verified")
-                        }
-                    } else {
-                        self.spinner.stopAnimating()
-                        let alert = UIAlertController(title: "Error", message: "Incorrect Password. Please try again.", preferredStyle: .alert)
-                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                        alert.addAction(action)
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            } else {
-                self.spinner.stopAnimating()
-                let alert = UIAlertController(title: "Error", message: "This email do not corresponds to our databse. Please check your email and try again.", preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alert.addAction(action)
-                self.present(alert, animated: true, completion: nil)
-            }
         }
         
     }
@@ -211,17 +213,24 @@ class StudentCompanyVC: UIViewController {
         return button
     }()
     
-//    @objc func toCompanyLoginVC() {
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-//        self.present(nextViewController!, animated:true, completion:nil)
-//    }
-//
-//    @objc func toStudentLoginVC() {
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as? ViewController
-//        self.present(nextViewController!, animated:true, completion:nil)
-//    }
+    @objc func signUp() {
+        let optionMenu = UIAlertController(title: nil, message: "Choose an Option", preferredStyle: .actionSheet)
+        let signupStudent = UIAlertAction(title: "Signup as Student", style: .default) { (action) in
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "SignUpVC") as? SignUpVC
+            self.present(nextViewController!, animated:true, completion:nil)
+        }
+        let signupRecruiter = UIAlertAction(title: "Signup as Recruiter", style: .default) { (action) in
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanySignUpVC") as? CompanySignUpVC
+            self.present(nextViewController!, animated:true, completion:nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        optionMenu.addAction(signupStudent)
+        optionMenu.addAction(signupRecruiter)
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -276,8 +285,14 @@ class StudentCompanyVC: UIViewController {
         signUpBtn.translatesAutoresizingMaskIntoConstraints = false
         signUpBtn.centerYAnchor.constraint(equalTo: signUplabel.centerYAnchor, constant: 0.0).isActive = true
         signUpBtn.leadingAnchor.constraint(equalTo: signUplabel.trailingAnchor, constant: 0.0).isActive = true
+        signUpBtn.addTarget(self, action: #selector(signUp), for: .touchUpInside)
         
         
     }
 
 }
+
+//girish.joshi21972@gmail.com
+//uma.joshi151197@gmail.com
+//babita.joshi131076@gmail.com
+//himanshujoshi2088@gmail.com

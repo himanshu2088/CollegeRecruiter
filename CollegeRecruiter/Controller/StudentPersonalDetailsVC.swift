@@ -31,15 +31,23 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "PERSONAL DETAILS"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
+    }()
+    
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 55.0
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
     }()
     
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("student")
 
-    let keyArray = ["Student Name", "Enrollment No", "Admission No", "Gender", "DOB", "Mobile No", "Category", "Branch", "Father's Name", "Mother's Name", "Parent's Mobile No", "Current Address", "Permanent Address", "City", "Aadhar No", "Passport Number"]
+    let keyArray = ["Student Name", "Enrollment No", "Admission No", "Gender", "DOB", "Mobile No", "Category", "Branch", "Father's Name", "Mother's Name", "Parent's Mobile No", "Current Address", "Permanent Address", "City", "Aadhar No", "Passport Number", "Semester"]
 
     var valueArray = [String]()
     
@@ -111,6 +119,16 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
             let passportNoData = data!["passportNumber"] as? String
             let primaryAddressData = data!["primaryAddress"] as? String
             let enrollmentNoData = data!["enrollmentNo"] as? String
+            let semester = data!["semester"] as? String
+            let photoUrl = data!["profileImageUrl"] as? String
+            
+            let url = URL(string: photoUrl!)
+            if url != nil {
+                let data = try? Data(contentsOf: url!)
+                if data != nil {
+                    self.imageView.image = UIImage(data: data!)
+                }
+            }
             
             self.valueArray.insert(nameData!, at: 0)
             self.valueArray.insert(enrollmentNoData!, at: 1)
@@ -128,13 +146,21 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
             self.valueArray.insert(cityData!, at: 13)
             self.valueArray.insert(aadharNoData!, at: 14)
             self.valueArray.insert(passportNoData!, at: 15)
+            self.valueArray.insert(semester!, at: 16)
             
             self.spinner.stopAnimating()
+            
+            self.view.addSubview(self.imageView)
+            self.imageView.translatesAutoresizingMaskIntoConstraints = false
+            self.imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+            self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+            self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+            self.imageView.topAnchor.constraint(equalTo: self.lineView.bottomAnchor, constant: 20.0).isActive = true
             
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 90.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true

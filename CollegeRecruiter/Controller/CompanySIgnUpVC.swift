@@ -32,8 +32,8 @@ class CompanySignUpVC: UIViewController {
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "SIGNUP"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -49,35 +49,35 @@ class CompanySignUpVC: UIViewController {
     let companyNameTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Company Name*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let addressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Address"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let cityTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "City"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let contactTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Contact Number"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let emailTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Company Email*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.keyboardType = .emailAddress
         return textField
     }()
@@ -85,7 +85,7 @@ class CompanySignUpVC: UIViewController {
     let passwordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Password*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -93,7 +93,7 @@ class CompanySignUpVC: UIViewController {
     let confirmPasswordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Confirm Password*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -101,8 +101,12 @@ class CompanySignUpVC: UIViewController {
     let registerBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("SIGN UP", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         button.addTarget(self, action: #selector(registerUser), for: .touchUpInside)
         return button
@@ -127,8 +131,10 @@ class CompanySignUpVC: UIViewController {
             }
             
             else {
+                spinner.startAnimating()
                 Firestore.firestore().collection("company").getDocuments { (snapshot, error) in
                     if let error = error {
+                        self.spinner.stopAnimating()
                         print(error.localizedDescription)
                     }
                     let documents = snapshot?.documents
@@ -138,6 +144,7 @@ class CompanySignUpVC: UIViewController {
                         self.emailArray.append(usedEmail)
                     }
                     if self.emailArray.contains(email) {
+                        self.spinner.stopAnimating()
                         let alert = UIAlertController(title: "Error", message: "Email is already taken. Please try another one.", preferredStyle: .alert)
                         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                         alert.addAction(action)
@@ -145,6 +152,7 @@ class CompanySignUpVC: UIViewController {
                     } else {
                         Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
                             if let error = error {
+                                self.spinner.stopAnimating()
                                 print(error.localizedDescription)
                             }
                             let documents = snapshot?.documents
@@ -154,6 +162,7 @@ class CompanySignUpVC: UIViewController {
                                 self.studentEmailArray.append(usedEmail)
                             }
                             if self.studentEmailArray.contains(email) {
+                                self.spinner.stopAnimating()
                                 let alert = UIAlertController(title: "Error", message: "Email is already taken. Please try another one.", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                                 alert.addAction(action)
@@ -172,8 +181,6 @@ class CompanySignUpVC: UIViewController {
         }
         
         func saveData() {
-            
-            spinner.startAnimating()
 
              guard let companyName = companyNameTextField.text, let address = addressTextField.text, let city = cityTextField.text, let contact = contactTextField.text, let email = emailTextField.text, let password = passwordTextField.text else { return }
 
@@ -205,9 +212,7 @@ class CompanySignUpVC: UIViewController {
                                 self.spinner.stopAnimating()
                                 let alert = UIAlertController(title: "Success", message: "Account created successfully. Check your Gmail to verify your account. An email verification link is sent there.", preferredStyle: .alert)
                                 let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-//                                  let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//                                  let nextViewController = storyBoard.instantiateViewController(withIdentifier: "CompanyLoginVC") as? CompanyLoginVC
-//                                  self.present(nextViewController!, animated:true, completion:nil)
+                                    self.dismiss(animated: true, completion: nil)
                                 })
                                 alert.addAction(action)
                                 self.present(alert, animated: true, completion: nil)

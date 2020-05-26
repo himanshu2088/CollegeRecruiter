@@ -30,9 +30,9 @@ class MyJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let profileLabel: UILabel = {
         let label = UILabel()
-        label.text = "LOGIN"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.text = "MY JOBS"
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -61,7 +61,7 @@ class MyJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-    
+        
         self.view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.isUserInteractionEnabled = true
@@ -109,7 +109,6 @@ class MyJobsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
-
         }
 
     }

@@ -11,6 +11,8 @@ import Firebase
 
 class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var resumeUrl: String?
+    
     let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "back.png"), for: .normal)
@@ -31,8 +33,8 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "EXPERIENCE DETAILS"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -47,6 +49,14 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
         let spinner = UIActivityIndicatorView()
         spinner.color = .black
         return spinner
+    }()
+    
+    let uploadBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Your resume", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
+        button.tintColor = .systemBlue
+        return button
     }()
     
     let tableView: UITableView = {
@@ -97,20 +107,45 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
             let data = snapshot?.data()
             let skillsData = data!["skills"] as? String
             let internshipData = data!["internshipDetails"] as? String
+            let resume = data!["resumeUrl"] as? String
+            
+            self.resumeUrl = resume
             
             self.valueArray.insert(skillsData!, at: 0)
             self.valueArray.insert(internshipData!, at: 1)
             
             self.spinner.stopAnimating()
             
+            self.view.addSubview(self.uploadBtn)
+            self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
+            self.uploadBtn.isUserInteractionEnabled = true
+            self.uploadBtn.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70.0).isActive = true
+            self.uploadBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+            self.uploadBtn.addTarget(self, action: #selector(self.downloadResume(_:)), for: .touchUpInside)
+            
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.uploadBtn.bottomAnchor, constant: 20.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
             
+        }
+    }
+    
+    @objc func downloadResume(_ sender : UIButton) {
+        
+        if resumeUrl != nil {
+            let urlString = self.resumeUrl
+            if let url = URL(string: urlString!) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "No resume found. Please upload a resume in Update Data.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -133,3 +168,4 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
     }
 
 }
+

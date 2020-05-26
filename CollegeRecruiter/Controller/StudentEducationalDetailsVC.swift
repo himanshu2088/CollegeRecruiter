@@ -31,15 +31,15 @@ class StudentEducationalDetailsVC: UIViewController, UITableViewDelegate, UITabl
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "EDUCATIONAL DETAILS"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
     let currentUserUID = Auth.auth().currentUser?.uid
     let collectionRef = Firestore.firestore().collection("student")
 
-    let keyArray = ["10th Board Name", "10th School Name", "10th %/CGPA", "10th Passing Year", "12th Board", "12th School", "12th Passing State", "12th Passing Year", "12th CGPA/%", "Graduation Passing Year", "Education Gap", "Number of Active Back", "Name of subjects with Active Backs", "Number of Total Backs", "Sem 1 SGPA", "Sem 2 SGPA", "Sem 3 SGPA", "Sem 4 SGPA", "Sem 5 SGPA", "Sem 6 SGPA", "Sem 7 SGPA", "Sem 8 SGPA"]
+    let keyArray = ["10th Board Name", "10th School Name", "10th %/CGPA", "10th Passing Year", "12th Board", "12th School", "12th Passing State", "12th Passing Year", "12th CGPA/%", "Graduation Passing Year", "Education Gap", "Number of Active Back", "Name of subjects with Active Backs", "Number of Total Backs", "Sem 1 SGPA", "Sem 2 SGPA", "Sem 3 SGPA", "Sem 4 SGPA", "Sem 5 SGPA", "Sem 6 SGPA", "Sem 7 SGPA", "Sem 8 SGPA", "Overall Graduation CGPA"]
 
     var valueArray = [String]()
     
@@ -117,6 +117,7 @@ class StudentEducationalDetailsVC: UIViewController, UITableViewDelegate, UITabl
             let semSixData = data!["semSix"] as? String
             let semSevenData = data!["semSeven"] as? String
             let semEightData = data!["semEight"] as? String
+            let overall = data!["overallCGPA"] as? String
             
             self.valueArray.insert(tenthBoardData!, at: 0)
             self.valueArray.insert(tenthSchoolData!, at: 1)
@@ -140,6 +141,7 @@ class StudentEducationalDetailsVC: UIViewController, UITableViewDelegate, UITabl
             self.valueArray.insert(semSixData!, at: 19)
             self.valueArray.insert(semSevenData!, at: 20)
             self.valueArray.insert(semEightData!, at: 21)
+            self.valueArray.insert(overall!, at: 22)
             
             self.spinner.stopAnimating()
             

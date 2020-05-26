@@ -30,16 +30,19 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     let profileLabel: UILabel = {
         let label = UILabel()
-        label.text = "PROFILE"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.text = "JOB PROFILE"
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
     var documentId: String?
     let userId = Auth.auth().currentUser?.uid
     
-    let keyArray = ["Company Name", "Company Email", "Job Title", "Job Description", "Job Requirements", "Job Responsibilities", "Salary", "Tenth %/CGPA", "Twelfth %/CGPA", "Graduation %/CGPA"]
+    var jobSem = "Default"
+    var jobCGPA = "Default"
+    
+    let keyArray = ["Company Name", "Job Title", "Job Description", "Job Requirements", "Job Responsibilities", "Salary", "Tenth %/CGPA", "Twelfth %/CGPA", "Graduation %/CGPA", "Semester"]
 
     var valueArray = [String]()
     
@@ -61,25 +64,57 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     let applyJobBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Apply for Job", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         return button
     }()
     
     @objc func applyJob(_ sender : UIButton) {
-        Firestore.firestore().collection("job").document(documentId!).updateData([
-            "studentsApplied" : ["\(userId!)"]
-        ]) { (error) in
-            if let error = error {
-                print("Error applying for jobs,\(error.localizedDescription)")
+        Firestore.firestore().collection("job").document(documentId!).getDocument { (snapshot, error) in
+            self.spinner.startAnimating()
+            let studentsApplied = snapshot?.data()!["studentsApplied"] as? Array<String>
+            if studentsApplied?.contains(self.userId!) == true {
+                self.spinner.stopAnimating()
+                let alert = UIAlertController(title: "Error", message: "You have already applied for this job.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                Firestore.firestore().collection("student").document(self.userId!).getDocument { (snapshot, error) in
+                    
+                    let studentSem = snapshot?.data()!["semester"] as? String
+                    let studentCGPA = snapshot?.data()!["overallCGPA"] as? String
+                    
+                    if Float(studentSem!)! >= Float(self.jobSem)! && Float(studentCGPA!)! >= Float(self.jobCGPA)! {
+                        Firestore.firestore().collection("job").document(self.documentId!).updateData([
+                            "studentsApplied" : ["\(self.userId!)"]
+                        ]) { (error) in
+                            if let error = error {
+                                self.spinner.stopAnimating()
+                                print("Error applying for jobs,\(error.localizedDescription)")
+                            }
+                            self.spinner.stopAnimating()
+                            let alert = UIAlertController(title: "Success", message: "You have successfully applied for this job.", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+                                self.dismiss(animated: true, completion: nil)
+                            })
+                            alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    } else {
+                        self.spinner.stopAnimating()
+                        let alert = UIAlertController(title: "Error", message: "You are not eligible for the job.", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
-            let alert = UIAlertController(title: "Success", message: "You have successfully applied for this job.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -129,6 +164,10 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             let tenth = data!["tenthCGPA"] as? String
             let twelfth = data!["twelfthCGPA"] as? String
             let graduation = data!["graduationCGPA"] as? String
+            let semester = data!["semester"] as? String
+            
+            self.jobSem = semester!
+            self.jobCGPA = graduation!
             
             self.valueArray.insert(nameData!, at: 0)
             self.valueArray.insert(titleData!, at: 1)
@@ -139,6 +178,7 @@ class ParticularJobVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             self.valueArray.insert(tenth!, at: 6)
             self.valueArray.insert(twelfth!, at: 7)
             self.valueArray.insert(graduation!, at: 8)
+            self.valueArray.insert(semester!, at: 9)
             
             self.spinner.stopAnimating()
             

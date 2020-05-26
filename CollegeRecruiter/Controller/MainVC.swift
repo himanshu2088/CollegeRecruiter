@@ -26,8 +26,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "HOME"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -64,18 +64,26 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }()
     
     var menuOut = false
+    
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 55.0
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
         
     let name: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir-Medium", size: 30.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
     let admissionNo: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.text = "Admission No."
         return label
     }()
@@ -83,7 +91,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let branch: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.text = "Branch"
         return label
     }()
@@ -91,7 +99,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let mobile: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Avenir", size: 20.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.text = "Mobile No."
         return label
     }()
@@ -125,6 +133,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }()
     
     @IBAction func logoutTapped(_ sender: UIButton) {
+        try! Auth.auth().signOut()
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     
@@ -184,6 +193,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         branch.removeFromSuperview()
         mobile.removeFromSuperview()
         branchText.removeFromSuperview()
+        imageView.removeFromSuperview()
         admissionNoText.removeFromSuperview()
         mobileText.removeFromSuperview()
         
@@ -285,10 +295,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.present(nextViewController!, animated:true, completion:nil)
     }
     
-    @IBAction func feedback(_ sender: UIButton) {
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -327,6 +333,15 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let admissionNoData = data!["admissionNo"] as? String
             let branchData = data!["branch"] as? String
             let mobileNo = data!["mobileNo"] as? String
+            let photoUrl = data!["profileImageUrl"] as? String
+            
+            let url = URL(string: photoUrl!)
+            if url != nil {
+                let data = try? Data(contentsOf: url!)
+                if data != nil {
+                    self.imageView.image = UIImage(data: data!)
+                }
+            }
             
             self.spinner.stopAnimating()
             self.name.text = nameData!
@@ -337,15 +352,22 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             self.field = branchData!
             
+            self.view2.addSubview(self.imageView)
+            self.imageView.translatesAutoresizingMaskIntoConstraints = false
+            self.imageView.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
+            self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+            self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+            self.imageView.topAnchor.constraint(equalTo: self.lineView.bottomAnchor, constant: 20.0).isActive = true
+            
             self.view2.addSubview(self.name)
             self.name.translatesAutoresizingMaskIntoConstraints = false
             self.name.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
-            self.name.centerYAnchor.constraint(equalTo: self.view2.centerYAnchor, constant: -100.0).isActive = true
+            self.name.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 40.0).isActive = true
             
             self.view2.addSubview(self.admissionNo)
             self.admissionNo.translatesAutoresizingMaskIntoConstraints = false
             self.admissionNo.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 20.0).isActive = true
-            self.admissionNo.centerYAnchor.constraint(equalTo: self.view2.centerYAnchor, constant: 20.0).isActive = true
+            self.admissionNo.topAnchor.constraint(equalTo: self.name.bottomAnchor, constant: 20.0).isActive = true
             
             self.view2.addSubview(self.branch)
             self.branch.translatesAutoresizingMaskIntoConstraints = false
@@ -379,7 +401,22 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     
     }
-
+    
+    
+    @IBAction func updateDataBtnPressed(_ sender: UIButton) {
+        leading.constant = 0
+        trailing.constant = 0
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "StudentUpdateData") as? StudentUpdateData
+        self.present(nextViewController!, animated:true, completion:nil)
+    }
+    
 }
 
-//himanshujoshi2088@gmail.com
+//babita.joshi131076@gmail.com

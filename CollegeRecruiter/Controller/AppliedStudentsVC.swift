@@ -31,8 +31,8 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "STUDENTS APPLIED"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -41,7 +41,9 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     var studentNameArray = [String]()
     var skillsArray = [String]()
+    var jobTitleArray = [String]()
     var documentidArray = [String]()
+    var profileImageArray = [String]()
 
     let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView()
@@ -52,9 +54,9 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UINib(nibName: "AppliedStudents", bundle: nil), forCellReuseIdentifier: "appliedStudents")
-        tableView.rowHeight = 99.0
-        tableView.allowsSelection = true
+        tableView.rowHeight = 100.0
         tableView.backgroundColor = .white
+        tableView.allowsSelection = true
         return tableView
     }()
     
@@ -95,29 +97,38 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
         Firestore.firestore().collection("job").document(documentId!).getDocument { (snapshot, error) in
             let data = snapshot?.data()
             let appliedStudents = (data!["studentsApplied"] as? [String])!
-            self.appliedStudentIdArray = appliedStudents
-            
-            for student in self.appliedStudentIdArray {
-                Firestore.firestore().collection("student").document(student).getDocument { (snapshot, error) in
-                    let data = snapshot?.data()
-                    let id = snapshot?.documentID
-                    let studentName = data!["name"] as? String
-                    let studentSkills = data!["skills"] as? String
-                    self.studentNameArray.append(studentName!)
-                    self.skillsArray.append(studentSkills!)
-                    self.documentidArray.append(id!)
-                    
-                    self.spinner.stopAnimating()
-                    
-                    self.view.addSubview(self.tableView)
-                    self.tableView.translatesAutoresizingMaskIntoConstraints = false
-                    self.tableView.isUserInteractionEnabled = true
-                    self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
-                    self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
-                    self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
-                    self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
+            if appliedStudents.isEmpty == true {
+                self.spinner.stopAnimating()
+                return
+            }
+            else {
+                self.appliedStudentIdArray = appliedStudents
+                
+                for student in self.appliedStudentIdArray {
+                    Firestore.firestore().collection("student").document(student).getDocument { (snapshot, error) in
+                        let data = snapshot?.data()
+                        let id = snapshot?.documentID
+                        let studentName = data!["name"] as? String
+                        let studentSkills = data!["skills"] as? String
+                        let studentImage = data!["profileImageUrl"] as? String
+                        self.studentNameArray.append(studentName!)
+                        self.skillsArray.append(studentSkills!)
+                        self.documentidArray.append(id!)
+                        self.profileImageArray.append(studentImage!)
+                        
+                        self.spinner.stopAnimating()
+                        
+                        self.view.addSubview(self.tableView)
+                        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+                        self.tableView.isUserInteractionEnabled = true
+                        self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
+                        self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
+                        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
+                        self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
+                    }
                 }
             }
+            
         }
     }
     
@@ -133,6 +144,13 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
         if let cell = tableView.dequeueReusableCell(withIdentifier: "appliedStudents", for: indexPath) as? AppliedStudents {
             cell.studentName.text = studentNameArray[indexPath.row]
             cell.studentSkills.text = skillsArray[indexPath.row]
+            let url = URL(string: profileImageArray[indexPath.row])
+            if url != nil {
+                let data = try? Data(contentsOf: url!)
+                if data != nil {
+                    cell.studentImage.setImage(UIImage(data: data!), for: .normal)
+                }
+            }
             return cell
         } else {
             return UITableViewCell()
@@ -147,7 +165,3 @@ class AppliedStudentsVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
 }
-
-
-
-//girish.joshi21972@gmail.com

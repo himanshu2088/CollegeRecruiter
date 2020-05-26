@@ -10,9 +10,10 @@ import UIKit
 
 class AppliedStudentsDataCell: UITableViewCell {
     
-    let value: UITextField = {
-        let value = UITextField()
+    let value: UILabel = {
+        let value = UILabel()
         value.font = UIFont(name: "Avenir", size: 18.0)
+        value.numberOfLines = 8
         return value
     }()
     
@@ -27,7 +28,6 @@ class AppliedStudentsDataCell: UITableViewCell {
         value.centerYAnchor.constraint(equalTo: self.key.centerYAnchor, constant: 0.0).isActive = true
         value.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -5.0).isActive = true
         value.widthAnchor.constraint(equalToConstant: width).isActive = true
-//        value.heightAnchor.constraint(equalToConstant: 120.0).isActive = true
         
     }
 

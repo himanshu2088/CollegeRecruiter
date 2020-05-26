@@ -26,8 +26,39 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "HOME"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return label
+    }()
+    
+    let profileImageView: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "company.png"), for: .normal)
+        button.contentMode = .scaleAspectFill
+        return button
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 3
+        label.font = UIFont(name: "Avenir-Heavy", size: 30.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return label
+    }()
+    
+    let numberLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Avenir-Medium", size: 25.0)
+        label.text = "Total no of jobs posted"
+        label.numberOfLines = 3
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        return label
+    }()
+    
+    let number: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Avenir-Medium", size: 22.0)
+        label.textColor = .black
         return label
     }()
     
@@ -36,7 +67,6 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var job = "1"
     
     let keyArray = ["Company Name", "Address", "City", "Contact", "Number of Jobs Posted"]
-    
     var valueArray = [String]()
     
     let spinner: UIActivityIndicatorView = {
@@ -57,7 +87,6 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var menuOut = false
     
     @IBOutlet weak var view2: UIView!
-    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var trailing: NSLayoutConstraint!
     @IBOutlet weak var leading: NSLayoutConstraint!
     @IBOutlet weak var companyName: UILabel!
@@ -69,16 +98,16 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return button
     }()
     
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "Press '+' button to create a new job."
-        label.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
-        label.numberOfLines = 2
-        return label
-    }()
-    
     @IBAction func addButton(_ sender: UIButton) {
+        
+        leading.constant = 0
+        trailing.constant = 0
+        
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
+            self.view.layoutIfNeeded()
+        }) { (animationComplete) in
+        }
+        
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "AddJobVC") as? AddJobVC
         self.present(nextViewController!, animated:true, completion:nil)
@@ -102,6 +131,11 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        number.removeFromSuperview()
+        numberLabel.removeFromSuperview()
+        nameLabel.removeFromSuperview()
+        profileImageView.removeFromSuperview()
+        
         self.view2.addSubview(lineView)
         lineView.translatesAutoresizingMaskIntoConstraints = false
         lineView.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 80.0).isActive = true
@@ -119,24 +153,52 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         profileLabel.translatesAutoresizingMaskIntoConstraints = false
         profileLabel.topAnchor.constraint(equalTo: self.view2.topAnchor, constant: 35.0).isActive = true
         profileLabel.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
-        
-        addButton.isHidden = false
-                
+                        
         self.view.addSubview(spinner)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-                
-        self.view2.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isUserInteractionEnabled = false
-        label.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 40.0).isActive = true
-        label.trailingAnchor.constraint(equalTo: self.view2.trailingAnchor, constant: -40.0).isActive = true
-        label.centerYAnchor.constraint(equalTo: self.view2.centerYAnchor, constant: 0.0).isActive = true
         
-        Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
-            let jobNo = snapshot?.count
-            self.job = "\(jobNo!)"
+        spinner.startAnimating()
+        
+        collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
+            let data = snapshot?.data()
+            let nameData = data!["companyName"] as? String
+            
+            self.view2.addSubview(self.profileImageView)
+            self.profileImageView.translatesAutoresizingMaskIntoConstraints = false
+            self.profileImageView.isUserInteractionEnabled = true
+            self.profileImageView.topAnchor.constraint(equalTo: self.lineView.bottomAnchor, constant: 20.0).isActive = true
+            self.profileImageView.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
+            self.profileImageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+            self.profileImageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+            
+            self.view2.addSubview(self.nameLabel)
+            self.nameLabel.text = nameData!
+            self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+            self.nameLabel.centerYAnchor.constraint(equalTo: self.view2.centerYAnchor, constant: -30.0).isActive = true
+            self.nameLabel.centerXAnchor.constraint(equalTo: self.view2.centerXAnchor, constant: 0.0).isActive = true
+            
+            Firestore.firestore().collection("job").whereField("companyEmail", isEqualTo: (Auth.auth().currentUser?.email)!).getDocuments { (snapshot, error) in
+                let jobNo = snapshot?.count
+                self.job = "\(jobNo!)"
+                
+                self.spinner.stopAnimating()
+                
+                self.view2.addSubview(self.numberLabel)
+                self.numberLabel.translatesAutoresizingMaskIntoConstraints = false
+                self.numberLabel.centerYAnchor.constraint(equalTo: self.view2.centerYAnchor, constant: 30.0).isActive = true
+                self.numberLabel.leadingAnchor.constraint(equalTo: self.view2.leadingAnchor, constant: 20.0).isActive = true
+                self.numberLabel.widthAnchor.constraint(equalToConstant: self.view2.frame.width - 100).isActive = true
+                
+                self.view2.addSubview(self.number)
+                self.number.text = "\(jobNo!)"
+                self.number.translatesAutoresizingMaskIntoConstraints = false
+                self.number.centerYAnchor.constraint(equalTo: self.numberLabel.centerYAnchor, constant: 0.0).isActive = true
+                self.number.trailingAnchor.constraint(equalTo: self.view2.trailingAnchor, constant: -20.0).isActive = true
+                
+            }
+        
         }
         
         let currentDate = Date()
@@ -166,8 +228,6 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         leading.constant = 0
         trailing.constant = 0
         
-        addButton.isHidden = false
-        
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseIn, animations: {
             self.view.layoutIfNeeded()
         }) { (animationComplete) in
@@ -196,8 +256,6 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         tableView.separatorStyle = .none
         
-        label.removeFromSuperview()
-        addButton.isHidden = true
         spinner.startAnimating()
         
         self.view2.addSubview(lineView)
@@ -276,10 +334,9 @@ class CompanyMainVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
-    @IBAction func feedbackBtnPressed(_ sender: UIButton) {
-    }
     
     @IBAction func logoutBtnPressed(_ sender: UIButton) {
+        try! Auth.auth().signOut()
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
     

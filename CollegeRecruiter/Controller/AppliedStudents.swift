@@ -12,7 +12,10 @@ class AppliedStudents: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        studentImage.clipsToBounds = true
+        studentImage.layer.cornerRadius = 30.0
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -22,5 +25,6 @@ class AppliedStudents: UITableViewCell {
     }
     @IBOutlet weak var studentName: UILabel!
     @IBOutlet weak var studentSkills: UILabel!
+    @IBOutlet weak var studentImage: UIButton!
     
 }

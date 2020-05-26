@@ -21,8 +21,8 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "EDUCATIONAL DETAILS"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -43,7 +43,7 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let label: UILabel = {
         let label = UILabel()
         label.text = "Educational Details"
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.font = UIFont(name: "Avenir-Medium", size: 30.0)
         return label
     }()
@@ -51,7 +51,7 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let tenthLabel: UILabel = {
         let label = UILabel()
         label.text = "10th Details"
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.font = UIFont(name: "Avenir", size: 25.0)
         return label
     }()
@@ -59,35 +59,35 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let tenthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "CGPA/%*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let tenthBoardTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Name of Board*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let tenthSchoolTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Name of Institution*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let tenthPassYearTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Passing Year*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthLabel: UILabel = {
         let label = UILabel()
         label.text = "12th/Diploma Details"
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.font = UIFont(name: "Avenir", size: 25.0)
         return label
     }()
@@ -95,20 +95,20 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let qualificationLblTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "12th or Diploma*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let educationGapTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Education gap after 10th (in years)*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthCGPATextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "CGPA/%*"
         return textField
     }()
@@ -116,63 +116,63 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let twelfthBoardTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Name of Board*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthSchoolTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Name of Institution*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthPassYearTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Passing Year*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let twelfthPassStateTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Passing State*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let graduationLabel: UILabel = {
         let label = UILabel()
         label.text = "Graduation Details"
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         label.font = UIFont(name: "Avenir", size: 25.0)
         return label
     }()
     
     let semOneTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 1 SGPA*"
         return textField
     }()
     
     let semTwoTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 2 SGPA*"
         return textField
     }()
     
     let semThreeTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 3 SGPA*"
         return textField
     }()
     
     let semFourTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 4 SGPA*"
         return textField
     }()
@@ -180,48 +180,55 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let semFiveTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Sem 5 SGPA*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let semSixTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Sem 6 SGPA*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let semSevenTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 7 SGPA*"
         return textField
     }()
     
     let semEightTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Sem 8 SGPA*"
+        return textField
+    }()
+    
+    let overallCGPATextField: SkyFloatingLabelTextField = {
+        let textField = SkyFloatingLabelTextField()
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        textField.placeholder = "Overall Graduation CGPA*"
         return textField
     }()
     
     let numberBackTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Number of Total Backlogs*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let activeBackTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Number of Active Backlogs"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let subjectBackTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Name of Subjects with Current Backlogs"
         return textField
     }()
@@ -229,15 +236,19 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     let passingYearGraduationTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Passing Year*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let nextBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         button.addTarget(self, action: #selector(saveEducationDetails), for: .touchUpInside)
         return button
@@ -245,9 +256,9 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     @objc func saveEducationDetails() {
         
-        guard let tenthPercentage = tenthCGPATextField.text, let tenthBoard = tenthBoardTextField.text, let tenthSchool = tenthSchoolTextField.text, let tenthPassingYear = tenthPassYearTextField.text, let qualificationDiplomaOrTwelfth = qualificationLblTextField.text, let educationGap = educationGapTextField.text, let twelCGPA = twelfthCGPATextField.text, let twelSchool = twelfthSchoolTextField.text, let twelBoard = twelfthBoardTextField.text, let twelPassingYear = twelfthPassYearTextField.text, let twelPassState = twelfthPassStateTextField.text, let semOne = semOneTextField.text, let semtwo = semTwoTextField.text, let semThree = semThreeTextField.text, let semFour = semFourTextField.text, let semFive = semFiveTextField.text, let semSix = semSixTextField.text, let semSeven = semSevenTextField.text, let semEight = semEightTextField.text, let totalBack = numberBackTextField.text, let activeBack = activeBackTextField.text, let subjectBack = subjectBackTextField.text, let graduationPassingYear = passingYearGraduationTextField.text else { return }
+        guard let tenthPercentage = tenthCGPATextField.text, let tenthBoard = tenthBoardTextField.text, let tenthSchool = tenthSchoolTextField.text, let tenthPassingYear = tenthPassYearTextField.text, let qualificationDiplomaOrTwelfth = qualificationLblTextField.text, let educationGap = educationGapTextField.text, let twelCGPA = twelfthCGPATextField.text, let twelSchool = twelfthSchoolTextField.text, let twelBoard = twelfthBoardTextField.text, let twelPassingYear = twelfthPassYearTextField.text, let twelPassState = twelfthPassStateTextField.text, let semOne = semOneTextField.text, let semtwo = semTwoTextField.text, let semThree = semThreeTextField.text, let semFour = semFourTextField.text, let semFive = semFiveTextField.text, let semSix = semSixTextField.text, let semSeven = semSevenTextField.text, let semEight = semEightTextField.text,let overallCGPA = overallCGPATextField.text , let totalBack = numberBackTextField.text, let activeBack = activeBackTextField.text, let subjectBack = subjectBackTextField.text, let graduationPassingYear = passingYearGraduationTextField.text else { return }
         
-        if tenthPercentage == "" || tenthPassingYear == "" || tenthSchool == "" || tenthBoard == "" || qualificationDiplomaOrTwelfth == "" || educationGap == "" || twelPassState == "" || twelPassingYear == "" || twelBoard == "" || twelSchool == "" || twelCGPA == "" || semOne == "" || semtwo == "" || semThree == "" || semFour == "" || semFive == "" || semSix == "" || semSeven == "" || totalBack == "" || graduationPassingYear == "" || semEight == "" {
+        if tenthPercentage == "" || tenthPassingYear == "" || tenthSchool == "" || tenthBoard == "" || qualificationDiplomaOrTwelfth == "" || educationGap == "" || twelPassState == "" || twelPassingYear == "" || twelBoard == "" || twelSchool == "" || twelCGPA == "" || semOne == "" || semtwo == "" || semThree == "" || semFour == "" || semFive == "" || semSix == "" || semSeven == "" || totalBack == "" || graduationPassingYear == "" || semEight == "" || overallCGPA == "" {
             let alert = UIAlertController(title: "Error", message: "Please enter all the mandatory fields.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
@@ -278,6 +289,7 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 "semSix" : semSix,
                 "semSeven" : semSeven,
                 "semEight" : semEight,
+                "overallCGPA" : overallCGPA,
                 "totalBack" : totalBack,
                 "activeBack" : activeBack,
                 "subjectBack" : subjectBack,
@@ -482,10 +494,17 @@ class EducationDetailsVC: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         semEightTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         semEightTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
+        scrollView.addSubview(overallCGPATextField)
+        overallCGPATextField.translatesAutoresizingMaskIntoConstraints = false
+        overallCGPATextField.isUserInteractionEnabled = true
+        overallCGPATextField.topAnchor.constraint(equalTo: self.semEightTextField.bottomAnchor, constant: 10.0).isActive = true
+        overallCGPATextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
+        overallCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        
         scrollView.addSubview(numberBackTextField)
         numberBackTextField.translatesAutoresizingMaskIntoConstraints = false
         numberBackTextField.isUserInteractionEnabled = true
-        numberBackTextField.topAnchor.constraint(equalTo: self.semEightTextField.bottomAnchor, constant: 10.0).isActive = true
+        numberBackTextField.topAnchor.constraint(equalTo: self.overallCGPATextField.bottomAnchor, constant: 10.0).isActive = true
         numberBackTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         numberBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         

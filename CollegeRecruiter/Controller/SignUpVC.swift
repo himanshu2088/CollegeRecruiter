@@ -32,8 +32,8 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "SIGNUP"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()
     
@@ -45,6 +45,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var emailArray = [String]()
     let genderData = ["Male", "Female"]
+    let semesterData = ["7", "8"]
     let branchData = ["Computer Science", "Mechanical", "Civil", "Electronics and Communications"]
     
     let scrollView: UIScrollView = {
@@ -53,72 +54,81 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         return s
     }()
     
+    let profileImageView: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "profile.png"), for: .normal)
+        button.layer.cornerRadius = 55.0
+        button.clipsToBounds = true
+        button.contentMode = .scaleAspectFill
+        return button
+    }()
+    
     let enrollmentTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Enrollment Number*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let admissionTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Admission Number*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let nameTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Name*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let fatherTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Father's Name"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let motherTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Mother's Name"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let branchTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Branch*"
         return textField
     }()
     
-    let batchTextField: SkyFloatingLabelTextField = {
+    let semesterTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.placeholder = "Batch/Section"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.placeholder = "Semester*"
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let genderTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Gender"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let dobTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Date of Birth (dd/mm/yyyy)"
         return textField
     }()
     
     let categoryTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.placeholder = "Category"
         return textField
     }()
@@ -126,7 +136,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let emailTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Email*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.keyboardType = .emailAddress
         return textField
     }()
@@ -134,7 +144,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let mobileTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Mobile Number*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.keyboardType = .numberPad
         return textField
     }()
@@ -142,7 +152,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let parentMobileTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Parent's Mobile Number"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.keyboardType = .numberPad
         return textField
     }()
@@ -150,28 +160,28 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let primaryAddressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Primary Address*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let currentAddressTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Current Address*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let cityTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "City"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return textField
     }()
     
     let passwordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Password*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -179,7 +189,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let confirmPasswordTextField: SkyFloatingLabelTextField = {
         let textField = SkyFloatingLabelTextField()
         textField.placeholder = "Confirm Password*"
-        textField.selectedTitleColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        textField.selectedTitleColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         textField.isSecureTextEntry = true
         return textField
     }()
@@ -187,18 +197,24 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     let nextBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("NEXT", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         button.addTarget(self, action: #selector(toNextPage), for: .touchUpInside)
         return button
     }()
     
     @objc func toNextPage() {
-
-        guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let branch = branchTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
         
-        if enrollment == "" || admission == "" || name == "" || branch == "" || email == "" || mobile == "" || primaryAdd == "" || currentAdd == "" || password == "" || confirmPassword == "" {
+        spinner.startAnimating()
+
+        guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let branch = branchTextField.text, let semester = semesterTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let password = passwordTextField.text, let confirmPassword = confirmPasswordTextField.text else { return }
+        
+        if enrollment == "" || admission == "" || name == "" || branch == "" || email == "" || mobile == "" || primaryAdd == "" || currentAdd == "" || password == "" || confirmPassword == "" || semester == "" {
             let alert = UIAlertController(title: "Error", message: "Please enter all the mandatory fields.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(action)
@@ -216,6 +232,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         else {
             Firestore.firestore().collection("student").getDocuments { (snapshot, error) in
                 if let error = error {
+                    self.spinner.stopAnimating()
                     print(error.localizedDescription)
                 }
                 let documents = snapshot?.documents
@@ -225,6 +242,7 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
                     self.emailArray.append(usedEmail)
                 }
                 if self.emailArray.contains(email) {
+                    self.spinner.stopAnimating()
                     let alert = UIAlertController(title: "Error", message: "Email is already taken. Please try another one.", preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alert.addAction(action)
@@ -240,48 +258,66 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func saveData() {
-        
-        spinner.startAnimating()
 
-         guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let fatherName = fatherTextField.text, let motherName = motherTextField.text, let branch = branchTextField.text, let batch = batchTextField.text, let gender = genderTextField.text, let dob = dobTextField.text, let category = categoryTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let parentMobile = parentMobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let city = cityTextField.text, let password = passwordTextField.text else { return }
+         guard let enrollment = enrollmentTextField.text, let admission = admissionTextField.text, let name = nameTextField.text, let fatherName = fatherTextField.text, let motherName = motherTextField.text, let branch = branchTextField.text, let semester = semesterTextField.text, let gender = genderTextField.text, let dob = dobTextField.text, let category = categoryTextField.text, let email = emailTextField.text, let mobile = mobileTextField.text, let parentMobile = parentMobileTextField.text, let primaryAdd = primaryAddressTextField.text, let currentAdd = currentAddressTextField.text, let city = cityTextField.text, let password = passwordTextField.text else { return }
 
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if let error = error {
                 self.spinner.stopAnimating()
                 debugPrint("Error while creating user, \(error.localizedDescription)")
             }
-
-            guard let userId = user?.user.uid else { return }
-            Firestore.firestore().collection("student").document(userId).setData([
-                "enrollmentNo" : enrollment,
-                "admissionNo" : admission,
-                "name" : name,
-                "fatherName" : fatherName,
-                "motherName" : motherName,
-                "branch" : branch,
-                "batch" : batch,
-                "gender" : gender,
-                "dob" : dob,
-                "category" : category,
-                "email" : email,
-                "mobileNo" : mobile,
-                "parentMobileNo" : parentMobile,
-                "primaryAddress" : primaryAdd,
-                "currentAddress" : currentAdd,
-                "city" : city,
-                "uniqueID" : "CS" + enrollment
-                ], completion: { (error) in
+            
+            let storageRef = Storage.storage().reference().child((user?.user.uid)! + ".jpg")
+            
+            if let uploadData = self.profileImageView.currentImage!.jpegData(compressionQuality: 0.1) {
+            
+                storageRef.putData(uploadData, metadata: nil) { (metaData, error) in
                     if let error = error {
-                        self.spinner.stopAnimating()
-                        debugPrint(error.localizedDescription)
-                        print("Error while creating user")
-                    } else {
-                        self.spinner.stopAnimating()
-                        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "EducationDetailsVC") as? EducationDetailsVC
-                        self.present(nextViewController!, animated:true, completion:nil)
+                        print(error.localizedDescription)
+                        return
                     }
-            }) 
+                    storageRef.downloadURL { (url, error) in
+                        if let error = error {
+                            print("error while getting image url.")
+                        }
+                        let profileImageUrl = (url?.absoluteString)!
+                        
+                        guard let userId = user?.user.uid else { return }
+                        Firestore.firestore().collection("student").document(userId).setData([
+                            "enrollmentNo" : enrollment,
+                            "admissionNo" : admission,
+                            "name" : name,
+                            "fatherName" : fatherName,
+                            "motherName" : motherName,
+                            "branch" : branch,
+                            "semester" : semester,
+                            "gender" : gender,
+                            "dob" : dob,
+                            "category" : category,
+                            "email" : email,
+                            "mobileNo" : mobile,
+                            "parentMobileNo" : parentMobile,
+                            "primaryAddress" : primaryAdd,
+                            "currentAddress" : currentAdd,
+                            "city" : city,
+                            "profileImageUrl" : profileImageUrl,
+                            "uniqueID" : "CS" + enrollment
+                            ], completion: { (error) in
+                                if let error = error {
+                                    self.spinner.stopAnimating()
+                                    debugPrint(error.localizedDescription)
+                                    print("Error while creating user")
+                                } else {
+                                    self.spinner.stopAnimating()
+                                    let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                                    let nextViewController = storyBoard.instantiateViewController(withIdentifier: "EducationDetailsVC") as? EducationDetailsVC
+                                    self.present(nextViewController!, animated:true, completion:nil)
+                                }
+                        })
+                        
+                    }
+                }
+            }
         }
 
     }
@@ -292,6 +328,10 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         let branchPicker = UIPickerView()
         branchTextField.inputView = branchPicker
         branchPicker.delegate = self
+        
+        let semesterPicker = UIPickerView()
+        semesterTextField.inputView = semesterPicker
+        semesterPicker.delegate = self
         
         self.view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -328,11 +368,20 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        
+        scrollView.addSubview(profileImageView)
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20.0).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+        profileImageView.addTarget(self, action: #selector(handleProfileImageView(_:)), for: .touchUpInside)
 
         scrollView.addSubview(enrollmentTextField)
         enrollmentTextField.translatesAutoresizingMaskIntoConstraints = false
         enrollmentTextField.isUserInteractionEnabled = true
-        enrollmentTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20.0).isActive = true
+        enrollmentTextField.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20.0).isActive = true
         enrollmentTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         enrollmentTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -371,17 +420,17 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         branchTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         branchTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
-        scrollView.addSubview(batchTextField)
-        batchTextField.translatesAutoresizingMaskIntoConstraints = false
-        batchTextField.isUserInteractionEnabled = true
-        batchTextField.topAnchor.constraint(equalTo: self.branchTextField.bottomAnchor, constant: 10.0).isActive = true
-        batchTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
-        batchTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        scrollView.addSubview(semesterTextField)
+        semesterTextField.translatesAutoresizingMaskIntoConstraints = false
+        semesterTextField.isUserInteractionEnabled = true
+        semesterTextField.topAnchor.constraint(equalTo: self.branchTextField.bottomAnchor, constant: 10.0).isActive = true
+        semesterTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
+        semesterTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
         scrollView.addSubview(genderTextField)
         genderTextField.translatesAutoresizingMaskIntoConstraints = false
         genderTextField.isUserInteractionEnabled = true
-        genderTextField.topAnchor.constraint(equalTo: self.batchTextField.bottomAnchor, constant: 10.0).isActive = true
+        genderTextField.topAnchor.constraint(equalTo: self.semesterTextField.bottomAnchor, constant: 10.0).isActive = true
         genderTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20.0).isActive = true
         genderTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
         
@@ -479,6 +528,9 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         else if branchTextField.isEditing == true {
             return branchData.count
         }
+        else if semesterTextField.isEditing == true {
+            return semesterData.count
+        }
         else {
             return branchData.count
         }
@@ -490,6 +542,9 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         }
         else if branchTextField.isEditing == true {
             return branchData[row]
+        }
+        else if semesterTextField.isEditing == true {
+            return semesterData[row]
         }
         else {
             return branchData[row]
@@ -503,6 +558,65 @@ class SignUpVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
         else if branchTextField.isEditing == true {
             branchTextField.text = branchData[row]
         }
+        else if semesterTextField.isEditing == true {
+            semesterTextField.text = semesterData[row]
+        }
+    }
+
+}
+
+
+extension SignUpVC : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    @objc func handleProfileImageView(_ sender : UIButton) {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            presentPhotoPicker(sourceType: .photoLibrary)
+            return
+        }
+
+        let photoSourcePicker = UIAlertController()
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default) { _ in
+            self.presentPhotoPicker(sourceType: .camera)
+        }
+
+        let choosePhotoAction = UIAlertAction(title: "Choose Photo", style: .default) { _ in
+            self.presentPhotoPicker(sourceType: .photoLibrary)
+        }
+
+        photoSourcePicker.addAction(takePhotoAction)
+        photoSourcePicker.addAction(choosePhotoAction)
+        photoSourcePicker.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(photoSourcePicker, animated: true, completion: nil)
+    }
+
+    func presentPhotoPicker(sourceType: UIImagePickerController.SourceType) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = sourceType
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        var selectedImageFromPicker: UIImage?
+
+        if let editedImage = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            selectedImageFromPicker = editedImage
+        } else if let originalImage = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerOriginalImage")] as? UIImage {
+            selectedImageFromPicker = originalImage
+        }
+
+        if let selectedImage = selectedImageFromPicker {
+            profileImageView.setImage(selectedImage, for: .normal)
+            dismiss(animated: true, completion: nil)
+        }
+
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 
 }

@@ -32,7 +32,7 @@ class CompanyForgotPassVC: UIViewController {
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "RESET PASSWORD"
-        label.font = UIFont(name: "Avenir", size: 16.0)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
         label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
     }()

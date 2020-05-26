@@ -11,6 +11,8 @@ import Firebase
 
 class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var resumeUrl: String?
+    
     let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "back.png"), for: .normal)
@@ -31,14 +33,22 @@ class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDat
     let profileLabel: UILabel = {
         let label = UILabel()
         label.text = "PROFILE"
-        label.font = UIFont(name: "Avenir", size: 16.0)
-        label.textColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        label.font = UIFont(name: "Avenir-Medium", size: 18.0)
+        label.textColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         return label
+    }()
+    
+    let uploadBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Your resume", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 20.0)
+        button.tintColor = .systemBlue
+        return button
     }()
     
     var documentId: String?
     
-    let keyArray = ["Name", "Enrollment No", "DOB", "Gender", "Mobile", "Email", "Skills", "Graduation Pass Year", "Education Gap", "Internship Details", "Total back", "Tenth CGPA/%", "Twelfth CGPA/%", "1st Sem SGPA", "2st Sem SGPA", "3st Sem SGPA", "4st Sem SGPA", "5st Sem SGPA", "6st Sem SGPA", "7st Sem SGPA", "8st Sem SGPA"]
+    let keyArray = ["Name", "Enrollment No", "DOB", "Gender", "Mobile", "Email", "Skills", "Graduation Pass Year", "Education Gap", "Internship Details", "Total back", "Tenth CGPA/%", "Twelfth CGPA/%", "1st Sem SGPA", "2st Sem SGPA", "3st Sem SGPA", "4st Sem SGPA", "5st Sem SGPA", "6st Sem SGPA", "7st Sem SGPA", "8st Sem SGPA", "Overall Graduation CGPA"]
     
     var valueArray = [String]()
     
@@ -52,16 +62,20 @@ class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDat
         let tableView = UITableView()
         tableView.register(UINib(nibName: "AppliedStudentsDataCell", bundle: nil), forCellReuseIdentifier: "appliedStudentsDataCell")
         tableView.allowsSelection = false
-        tableView.rowHeight = 150
         tableView.backgroundColor = .white
+        tableView.rowHeight = 150
         return tableView
     }()
     
     let sendMailBtn: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Send Mail", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
-        button.backgroundColor = #colorLiteral(red: 1, green: 0.1019607843, blue: 0.1490196078, alpha: 1)
+        button.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 25.0)
+        button.layer.cornerRadius = 8.0
+        button.layer.shadowColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowOpacity = 1.0
+        button.backgroundColor = #colorLiteral(red: 0.168627451, green: 0.8509803922, blue: 0.6352941176, alpha: 1)
         button.tintColor = .white
         return button
     }()
@@ -123,6 +137,10 @@ class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDat
             let sixthSem = data!["semSix"] as? String
             let seventhSem = data!["semSeven"] as? String
             let eighthSem = data!["semEight"] as? String
+            let overall = data!["overallCGPA"] as? String
+            let resume = data!["resumeUrl"] as? String
+            
+            self.resumeUrl = resume
             
             self.valueArray.insert(name!, at: 0)
             self.valueArray.insert(enrollmentNo!, at: 1)
@@ -145,6 +163,7 @@ class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDat
             self.valueArray.insert(sixthSem!, at: 18)
             self.valueArray.insert(seventhSem!, at: 19)
             self.valueArray.insert(eighthSem!, at: 20)
+            self.valueArray.insert(overall!, at: 21)
             
             
             self.spinner.stopAnimating()
@@ -157,15 +176,37 @@ class ParticularStudentVC: UIViewController, UITableViewDelegate, UITableViewDat
             self.sendMailBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
             self.sendMailBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
             
+            self.view.addSubview(self.uploadBtn)
+            self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
+            self.uploadBtn.isUserInteractionEnabled = true
+            self.uploadBtn.topAnchor.constraint(equalTo: self.sendMailBtn.bottomAnchor, constant: 20.0).isActive = true
+            self.uploadBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+            self.uploadBtn.addTarget(self, action: #selector(self.downloadResume(_:)), for: .touchUpInside)
+            
             self.view.addSubview(self.tableView)
             self.tableView.translatesAutoresizingMaskIntoConstraints = false
             self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.sendMailBtn.bottomAnchor, constant: 10.0).isActive = true
+            self.tableView.topAnchor.constraint(equalTo: self.uploadBtn.bottomAnchor, constant: 10.0).isActive = true
             self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
             self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
         }
         
+    }
+    
+    @objc func downloadResume(_ sender : UIButton) {
+        
+        if resumeUrl != nil {
+            let urlString = self.resumeUrl
+            if let url = URL(string: urlString!) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "No resume found. Please upload a resume in Update Data.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
