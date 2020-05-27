@@ -9,6 +9,54 @@
 import UIKit
 import Firebase
 
+var studentName: String?
+var studentAdmission: String?
+var studentMobile: String?
+var studentBranch: String?
+var studentAadhar: String?
+var studentActiveBack: String?
+var studentCategory: String?
+var studentCity: String?
+var studentCurrentAdd: String?
+var studentDOB: String?
+var studentEducationGap: String?
+var studentmail: String?
+var studentEnrollNo: String?
+var studentFatherName: String?
+var studentMotherName: String?
+var studentGender: String?
+var studentGraduationPassYear: String?
+var studentInternship: String?
+var studentOverallCGPA: String?
+var studentParentMobile: String?
+var studentPassport: String?
+var studentPrimaryAdd: String?
+var studentImage: String?
+var studentQualification12OrDiploma: String?
+var studentResume: String?
+var studentSem1: String?
+var studentSem2: String?
+var studentSem3: String?
+var studentSem4: String?
+var studentSem5: String?
+var studentSem6: String?
+var studentSem7: String?
+var studentSem8: String?
+var studentSemester: String?
+var studentSkills: String?
+var studentSubjectBack: String?
+var studentTenthBoard: String?
+var studentTenthPassYear: String?
+var studentTenthSchool: String?
+var studentTenthCGPA: String?
+var studentTotalBack: String?
+var studentTwelBoard: String?
+var studentTwelCGPA: String?
+var studentTwelPassState: String?
+var studentTwelPassYear: String?
+var studentTwelSchool: String?
+
+
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let lineView: UIView = {
@@ -334,6 +382,92 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let branchData = data!["branch"] as? String
             let mobileNo = data!["mobileNo"] as? String
             let photoUrl = data!["profileImageUrl"] as? String
+            let aadharNoData = data!["aadharNumber"] as? String
+            let categoryData = data!["category"] as? String
+            let cityData = data!["city"] as? String
+            let currentAddressData = data!["currentAddress"] as? String
+            let dobData = data!["dob"] as? String
+            let fatherNameData = data!["fatherName"] as? String
+            let motherNameData = data!["motherName"] as? String
+            let genderData = data!["gender"] as? String
+            let parentMobileNoData = data!["parentMobileNo"] as? String
+            let passportNoData = data!["passportNumber"] as? String
+            let primaryAddressData = data!["primaryAddress"] as? String
+            let enrollmentNoData = data!["enrollmentNo"] as? String
+            let semester = data!["semester"] as? String
+            let tenthBoardData = data!["tenthBoard"] as? String
+            let tenthSchoolData = data!["tenthSchool"] as? String
+            let tenthCGPAData = data!["tenthPercentage"] as? String
+            let tenthPassYearData = data!["tenthPassingYear"] as? String
+            let twelBoardData = data!["twelBoard"] as? String
+            let twelSchoolData = data!["twelSchool"] as? String
+            let twelPassStateData = data!["twelPassState"] as? String
+            let twelPassYearData = data!["twelPassingYear"] as? String
+            let twelCGPAData = data!["twelCGPA"] as? String
+            let graduationPassYearData = data!["graduationPassingYear"] as? String
+            let educationGapData = data!["educationGap"] as? String
+            let activeBackData = data!["activeBack"] as? String
+            let backSubjectsData = data!["subjectBack"] as? String
+            let totalBackData = data!["totalBack"] as? String
+            let semOneData = data!["semOne"] as? String
+            let semTwoData = data!["semtwo"] as? String
+            let semThreeData = data!["semThree"] as? String
+            let semFourData = data!["semFour"] as? String
+            let semFiveData = data!["semFive"] as? String
+            let semSixData = data!["semSix"] as? String
+            let semSevenData = data!["semSeven"] as? String
+            let semEightData = data!["semEight"] as? String
+            let overall = data!["overallCGPA"] as? String
+            let skillsData = data!["skills"] as? String
+            let internshipData = data!["internshipDetails"] as? String
+            let resume = data!["resumeUrl"] as? String
+            
+            
+            studentName = nameData!
+            studentAdmission = admissionNoData!
+            studentBranch = branchData!
+            studentMobile = mobileNo!
+            studentImage = photoUrl!
+            studentAadhar = aadharNoData!
+            studentCategory = categoryData!
+            studentCity = cityData!
+            studentCurrentAdd = currentAddressData!
+            studentDOB = dobData!
+            studentFatherName = fatherNameData!
+            studentMotherName = motherNameData!
+            studentGender = genderData!
+            studentParentMobile = parentMobileNoData!
+            studentPassport = passportNoData!
+            studentPrimaryAdd = primaryAddressData!
+            studentEnrollNo = enrollmentNoData!
+            studentSemester = semester!
+            studentTenthBoard = tenthBoardData!
+            studentTenthSchool = tenthSchoolData!
+            studentTenthCGPA = tenthCGPAData!
+            studentTenthPassYear = tenthPassYearData!
+            studentTwelBoard = twelBoardData!
+            studentTwelPassYear = twelPassYearData!
+            studentTwelSchool = twelSchoolData!
+            studentTwelPassState = twelPassStateData!
+            studentTwelCGPA = twelCGPAData!
+            studentGraduationPassYear = graduationPassYearData!
+            studentEducationGap = educationGapData!
+            studentActiveBack = activeBackData!
+            studentSubjectBack = backSubjectsData!
+            studentTotalBack = totalBackData!
+            studentSem1 = semOneData!
+            studentSem2 = semTwoData!
+            studentSem3 = semThreeData!
+            studentSem4 = semFourData!
+            studentSem5 = semFiveData!
+            studentSem6 = semSixData!
+            studentSem7 = semSevenData!
+            studentSem8 = semEightData!
+            studentOverallCGPA = overall!
+            studentSkills = skillsData!
+            studentInternship = internshipData!
+            studentResume = resume!
+            
             
             let url = URL(string: photoUrl!)
             if url != nil {
@@ -401,7 +535,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     
     }
-    
     
     @IBAction func updateDataBtnPressed(_ sender: UIButton) {
         leading.constant = 0

@@ -291,201 +291,173 @@ class StudentUpdateData: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let semesterPicker = UIPickerView()
         semesterTextField.inputView = semesterPicker
         semesterPicker.delegate = self
-        
-        spinner.startAnimating()
-        
-        let userId = Auth.auth().currentUser?.uid
-        
-        Firestore.firestore().collection("student").document(userId!).getDocument { (snapshot, error) in
-            let data = snapshot?.data()
-            let internship = data!["internshipDetails"] as? String
-            let skills = data!["skills"] as? String
-            let totalBack = data!["totalBack"] as? String
-            let activeBack = data!["activeBack"] as? String
-            let subjectBack = data!["subjectBack"] as? String
-            let semester = data!["semester"] as? String
-            let overall = data!["overallCGPA"] as? String
-            let one = data!["semOne"] as? String
-            let two = data!["semtwo"] as? String
-            let three = data!["semThree"] as? String
-            let four = data!["semFour"] as? String
-            let five = data!["semFive"] as? String
-            let six = data!["semSix"] as? String
-            let seven = data!["semSeven"] as? String
-            let eight = data!["semEight"] as? String
-            let photoUrl = data!["profileImageUrl"] as? String
-            let resumeUrl = data!["resumeUrl"] as? String
             
-            self.resume = resumeUrl
-            
-            let url = URL(string: photoUrl!)
-            if url != nil {
-                let data = try? Data(contentsOf: url!)
-                if data != nil {
-                    self.imageView.setImage(UIImage(data: data!), for: .normal)
-                }
+        self.resume = studentResume
+        
+        let url = URL(string: studentImage!)
+        if url != nil {
+            let data = try? Data(contentsOf: url!)
+            if data != nil {
+                self.imageView.setImage(UIImage(data: data!), for: .normal)
             }
-            
-            self.spinner.stopAnimating()
-            
-            self.view.addSubview(self.scrollView)
-            self.scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0.0).isActive = true
-            self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
-            self.scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0.0).isActive = true
-            self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
-            
-            self.scrollView.addSubview(self.imageView)
-            self.imageView.translatesAutoresizingMaskIntoConstraints = false
-            self.imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-            self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
-            self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
-            self.imageView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 0.0).isActive = true
-            self.imageView.addTarget(self, action: #selector(self.handleProfileImageView(_:)), for: .touchUpInside)
-
-            self.scrollView.addSubview(self.internshipTextField)
-            self.internshipTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.internshipTextField.isUserInteractionEnabled = true
-            self.internshipTextField.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 30.0).isActive = true
-            self.internshipTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.internshipTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.internshipTextField.text = internship!
-            
-            self.scrollView.addSubview(self.skillsTextField)
-            self.skillsTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.skillsTextField.isUserInteractionEnabled = true
-            self.skillsTextField.topAnchor.constraint(equalTo: self.internshipTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.skillsTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.skillsTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.skillsTextField.text = skills!
-            
-            self.scrollView.addSubview(self.totalBackTextField)
-            self.totalBackTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.totalBackTextField.isUserInteractionEnabled = true
-            self.totalBackTextField.topAnchor.constraint(equalTo: self.skillsTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.totalBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.totalBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.totalBackTextField.text = totalBack!
-            
-            self.scrollView.addSubview(self.activeBackTextField)
-            self.activeBackTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.activeBackTextField.isUserInteractionEnabled = true
-            self.activeBackTextField.topAnchor.constraint(equalTo: self.totalBackTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.activeBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.activeBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.activeBackTextField.text = activeBack!
-            
-            self.scrollView.addSubview(self.subjectBackTextField)
-            self.subjectBackTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.subjectBackTextField.isUserInteractionEnabled = true
-            self.subjectBackTextField.topAnchor.constraint(equalTo: self.activeBackTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.subjectBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.subjectBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.subjectBackTextField.text = subjectBack!
-            
-            self.scrollView.addSubview(self.overallCGPATextField)
-            self.overallCGPATextField.translatesAutoresizingMaskIntoConstraints = false
-            self.overallCGPATextField.isUserInteractionEnabled = true
-            self.overallCGPATextField.topAnchor.constraint(equalTo: self.subjectBackTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.overallCGPATextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.overallCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.overallCGPATextField.text = overall!
-            
-            self.scrollView.addSubview(self.semesterTextField)
-            self.semesterTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semesterTextField.isUserInteractionEnabled = true
-            self.semesterTextField.topAnchor.constraint(equalTo: self.overallCGPATextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semesterTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semesterTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semesterTextField.text = semester!
-            
-            self.scrollView.addSubview(self.semOneTextField)
-            self.semOneTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semOneTextField.isUserInteractionEnabled = true
-            self.semOneTextField.topAnchor.constraint(equalTo: self.semesterTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semOneTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semOneTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semOneTextField.text = one!
-            
-            self.scrollView.addSubview(self.semTwoTextField)
-            self.semTwoTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semTwoTextField.isUserInteractionEnabled = true
-            self.semTwoTextField.topAnchor.constraint(equalTo: self.semOneTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semTwoTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semTwoTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semTwoTextField.text = two!
-            
-            self.scrollView.addSubview(self.semThreeTextField)
-            self.semThreeTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semThreeTextField.isUserInteractionEnabled = true
-            self.semThreeTextField.topAnchor.constraint(equalTo: self.semTwoTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semThreeTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semThreeTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semThreeTextField.text = three!
-            
-            self.scrollView.addSubview(self.semFourTextField)
-            self.semFourTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semFourTextField.isUserInteractionEnabled = true
-            self.semFourTextField.topAnchor.constraint(equalTo: self.semThreeTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semFourTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semFourTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semFourTextField.text = four!
-            
-            self.scrollView.addSubview(self.semFiveTextField)
-            self.semFiveTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semFiveTextField.isUserInteractionEnabled = true
-            self.semFiveTextField.topAnchor.constraint(equalTo: self.semFourTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semFiveTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semFiveTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semFiveTextField.text = five!
-            
-            self.scrollView.addSubview(self.semSixTextField)
-            self.semSixTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semSixTextField.isUserInteractionEnabled = true
-            self.semSixTextField.topAnchor.constraint(equalTo: self.semFiveTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semSixTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semSixTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semSixTextField.text = six!
-            
-            self.scrollView.addSubview(self.semSevenTextField)
-            self.semSevenTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semSevenTextField.isUserInteractionEnabled = true
-            self.semSevenTextField.topAnchor.constraint(equalTo: self.semSixTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semSevenTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semSevenTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semSevenTextField.text = seven!
-            
-            self.scrollView.addSubview(self.semEightTextField)
-            self.semEightTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.semEightTextField.isUserInteractionEnabled = true
-            self.semEightTextField.topAnchor.constraint(equalTo: self.semSevenTextField.bottomAnchor, constant: 10.0).isActive = true
-            self.semEightTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.semEightTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.semEightTextField.text = eight!
-            
-            self.scrollView.addSubview(self.resumeLabel)
-            self.resumeLabel.translatesAutoresizingMaskIntoConstraints = false
-            self.resumeLabel.isUserInteractionEnabled = false
-            self.resumeLabel.topAnchor.constraint(equalTo: self.semEightTextField.bottomAnchor, constant: 15.0).isActive = true
-            self.resumeLabel.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            
-            self.scrollView.addSubview(self.uploadBtn)
-            self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
-            self.uploadBtn.isUserInteractionEnabled = true
-            self.uploadBtn.centerYAnchor.constraint(equalTo: self.resumeLabel.centerYAnchor, constant: 0.0).isActive = true
-            self.uploadBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.uploadBtn.addTarget(self, action: #selector(self.handleResume(_:)), for: .touchUpInside)
-            
-            self.scrollView.addSubview(self.postBtn)
-            self.postBtn.translatesAutoresizingMaskIntoConstraints = false
-            self.postBtn.isUserInteractionEnabled = true
-            self.postBtn.topAnchor.constraint(equalTo: self.resumeLabel.bottomAnchor, constant: 25.0).isActive = true
-            self.postBtn.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
-            self.postBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
-            self.postBtn.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -30.0).isActive = true
-            self.postBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-            
         }
-    
+        
+        self.view.addSubview(self.scrollView)
+        self.scrollView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0.0).isActive = true
+        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 80.0).isActive = true
+        self.scrollView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0.0).isActive = true
+        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
+        
+        self.scrollView.addSubview(self.imageView)
+        self.imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+        self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+        self.imageView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 0.0).isActive = true
+        self.imageView.addTarget(self, action: #selector(self.handleProfileImageView(_:)), for: .touchUpInside)
+
+        self.scrollView.addSubview(self.internshipTextField)
+        self.internshipTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.internshipTextField.isUserInteractionEnabled = true
+        self.internshipTextField.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 30.0).isActive = true
+        self.internshipTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.internshipTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.internshipTextField.text = studentInternship!
+        
+        self.scrollView.addSubview(self.skillsTextField)
+        self.skillsTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.skillsTextField.isUserInteractionEnabled = true
+        self.skillsTextField.topAnchor.constraint(equalTo: self.internshipTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.skillsTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.skillsTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.skillsTextField.text = studentSkills!
+        
+        self.scrollView.addSubview(self.totalBackTextField)
+        self.totalBackTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.totalBackTextField.isUserInteractionEnabled = true
+        self.totalBackTextField.topAnchor.constraint(equalTo: self.skillsTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.totalBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.totalBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.totalBackTextField.text = studentTotalBack!
+        
+        self.scrollView.addSubview(self.activeBackTextField)
+        self.activeBackTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.activeBackTextField.isUserInteractionEnabled = true
+        self.activeBackTextField.topAnchor.constraint(equalTo: self.totalBackTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.activeBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.activeBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.activeBackTextField.text = studentActiveBack!
+        
+        self.scrollView.addSubview(self.subjectBackTextField)
+        self.subjectBackTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.subjectBackTextField.isUserInteractionEnabled = true
+        self.subjectBackTextField.topAnchor.constraint(equalTo: self.activeBackTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.subjectBackTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.subjectBackTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.subjectBackTextField.text = studentSubjectBack!
+        
+        self.scrollView.addSubview(self.overallCGPATextField)
+        self.overallCGPATextField.translatesAutoresizingMaskIntoConstraints = false
+        self.overallCGPATextField.isUserInteractionEnabled = true
+        self.overallCGPATextField.topAnchor.constraint(equalTo: self.subjectBackTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.overallCGPATextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.overallCGPATextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.overallCGPATextField.text = studentOverallCGPA!
+        
+        self.scrollView.addSubview(self.semesterTextField)
+        self.semesterTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semesterTextField.isUserInteractionEnabled = true
+        self.semesterTextField.topAnchor.constraint(equalTo: self.overallCGPATextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semesterTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semesterTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semesterTextField.text = studentSemester!
+        
+        self.scrollView.addSubview(self.semOneTextField)
+        self.semOneTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semOneTextField.isUserInteractionEnabled = true
+        self.semOneTextField.topAnchor.constraint(equalTo: self.semesterTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semOneTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semOneTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semOneTextField.text = studentSem1!
+        
+        self.scrollView.addSubview(self.semTwoTextField)
+        self.semTwoTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semTwoTextField.isUserInteractionEnabled = true
+        self.semTwoTextField.topAnchor.constraint(equalTo: self.semOneTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semTwoTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semTwoTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semTwoTextField.text = studentSem2!
+        
+        self.scrollView.addSubview(self.semThreeTextField)
+        self.semThreeTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semThreeTextField.isUserInteractionEnabled = true
+        self.semThreeTextField.topAnchor.constraint(equalTo: self.semTwoTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semThreeTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semThreeTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semThreeTextField.text = studentSem3!
+        
+        self.scrollView.addSubview(self.semFourTextField)
+        self.semFourTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semFourTextField.isUserInteractionEnabled = true
+        self.semFourTextField.topAnchor.constraint(equalTo: self.semThreeTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semFourTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semFourTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semFourTextField.text = studentSem4!
+        
+        self.scrollView.addSubview(self.semFiveTextField)
+        self.semFiveTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semFiveTextField.isUserInteractionEnabled = true
+        self.semFiveTextField.topAnchor.constraint(equalTo: self.semFourTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semFiveTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semFiveTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semFiveTextField.text = studentSem5!
+        
+        self.scrollView.addSubview(self.semSixTextField)
+        self.semSixTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semSixTextField.isUserInteractionEnabled = true
+        self.semSixTextField.topAnchor.constraint(equalTo: self.semFiveTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semSixTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semSixTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semSixTextField.text = studentSem6!
+        
+        self.scrollView.addSubview(self.semSevenTextField)
+        self.semSevenTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semSevenTextField.isUserInteractionEnabled = true
+        self.semSevenTextField.topAnchor.constraint(equalTo: self.semSixTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semSevenTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semSevenTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semSevenTextField.text = studentSem7!
+        
+        self.scrollView.addSubview(self.semEightTextField)
+        self.semEightTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.semEightTextField.isUserInteractionEnabled = true
+        self.semEightTextField.topAnchor.constraint(equalTo: self.semSevenTextField.bottomAnchor, constant: 10.0).isActive = true
+        self.semEightTextField.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.semEightTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.semEightTextField.text = studentSem8!
+        
+        self.scrollView.addSubview(self.resumeLabel)
+        self.resumeLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.resumeLabel.isUserInteractionEnabled = false
+        self.resumeLabel.topAnchor.constraint(equalTo: self.semEightTextField.bottomAnchor, constant: 15.0).isActive = true
+        self.resumeLabel.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        
+        self.scrollView.addSubview(self.uploadBtn)
+        self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
+        self.uploadBtn.isUserInteractionEnabled = true
+        self.uploadBtn.centerYAnchor.constraint(equalTo: self.resumeLabel.centerYAnchor, constant: 0.0).isActive = true
+        self.uploadBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.uploadBtn.addTarget(self, action: #selector(self.handleResume(_:)), for: .touchUpInside)
+        
+        self.scrollView.addSubview(self.postBtn)
+        self.postBtn.translatesAutoresizingMaskIntoConstraints = false
+        self.postBtn.isUserInteractionEnabled = true
+        self.postBtn.topAnchor.constraint(equalTo: self.resumeLabel.bottomAnchor, constant: 25.0).isActive = true
+        self.postBtn.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: 20.0).isActive = true
+        self.postBtn.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0).isActive = true
+        self.postBtn.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -30.0).isActive = true
+        self.postBtn.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+        
         self.view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.isUserInteractionEnabled = true

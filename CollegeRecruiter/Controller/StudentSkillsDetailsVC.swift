@@ -96,42 +96,28 @@ class StudentSkillsDetailsVC: UIViewController, UITableViewDelegate, UITableView
         
         tableView.separatorStyle = .none
         
-        self.view.addSubview(spinner)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.resumeUrl = studentResume
         
-        spinner.startAnimating()
-                
-        collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
-            let data = snapshot?.data()
-            let skillsData = data!["skills"] as? String
-            let internshipData = data!["internshipDetails"] as? String
-            let resume = data!["resumeUrl"] as? String
+        self.valueArray.insert(studentSkills!, at: 0)
+        self.valueArray.insert(studentInternship!, at: 1)
+        
+        self.spinner.stopAnimating()
+        
+        self.view.addSubview(self.uploadBtn)
+        self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
+        self.uploadBtn.isUserInteractionEnabled = true
+        self.uploadBtn.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70.0).isActive = true
+        self.uploadBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        self.uploadBtn.addTarget(self, action: #selector(self.downloadResume(_:)), for: .touchUpInside)
+        
+        self.view.addSubview(self.tableView)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.isUserInteractionEnabled = true
+        self.tableView.topAnchor.constraint(equalTo: self.uploadBtn.bottomAnchor, constant: 20.0).isActive = true
+        self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
+        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
+        self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
             
-            self.resumeUrl = resume
-            
-            self.valueArray.insert(skillsData!, at: 0)
-            self.valueArray.insert(internshipData!, at: 1)
-            
-            self.spinner.stopAnimating()
-            
-            self.view.addSubview(self.uploadBtn)
-            self.uploadBtn.translatesAutoresizingMaskIntoConstraints = false
-            self.uploadBtn.isUserInteractionEnabled = true
-            self.uploadBtn.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70.0).isActive = true
-            self.uploadBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-            self.uploadBtn.addTarget(self, action: #selector(self.downloadResume(_:)), for: .touchUpInside)
-            
-            self.view.addSubview(self.tableView)
-            self.tableView.translatesAutoresizingMaskIntoConstraints = false
-            self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.uploadBtn.bottomAnchor, constant: 20.0).isActive = true
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
-            
-        }
     }
     
     @objc func downloadResume(_ sender : UIButton) {

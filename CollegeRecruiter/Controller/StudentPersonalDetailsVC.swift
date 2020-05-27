@@ -98,74 +98,48 @@ class StudentPersonalDetailsVC: UIViewController, UITableViewDelegate, UITableVi
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        
-        spinner.startAnimating()
-                
-        collectionRef.document(currentUserUID!).getDocument { (snapshot, error) in
-            let data = snapshot?.data()
-            let nameData = data!["name"] as? String
-            let admissionNoData = data!["admissionNo"] as? String
-            let branchData = data!["branch"] as? String
-            let mobileNoData = data!["mobileNo"] as? String
-            let aadharNoData = data!["aadharNumber"] as? String
-            let categoryData = data!["category"] as? String
-            let cityData = data!["city"] as? String
-            let currentAddressData = data!["currentAddress"] as? String
-            let dobData = data!["dob"] as? String
-            let fatherNameData = data!["fatherName"] as? String
-            let motherNameData = data!["motherName"] as? String
-            let genderData = data!["gender"] as? String
-            let parentMobileNoData = data!["parentMobileNo"] as? String
-            let passportNoData = data!["passportNumber"] as? String
-            let primaryAddressData = data!["primaryAddress"] as? String
-            let enrollmentNoData = data!["enrollmentNo"] as? String
-            let semester = data!["semester"] as? String
-            let photoUrl = data!["profileImageUrl"] as? String
             
-            let url = URL(string: photoUrl!)
-            if url != nil {
-                let data = try? Data(contentsOf: url!)
-                if data != nil {
-                    self.imageView.image = UIImage(data: data!)
-                }
+        let url = URL(string: studentImage!)
+        if url != nil {
+            let data = try? Data(contentsOf: url!)
+            if data != nil {
+                self.imageView.image = UIImage(data: data!)
             }
-            
-            self.valueArray.insert(nameData!, at: 0)
-            self.valueArray.insert(enrollmentNoData!, at: 1)
-            self.valueArray.insert(admissionNoData!, at: 2)
-            self.valueArray.insert(genderData!, at: 3)
-            self.valueArray.insert(dobData!, at: 4)
-            self.valueArray.insert(mobileNoData!, at: 5)
-            self.valueArray.insert(categoryData!, at: 6)
-            self.valueArray.insert(branchData!, at: 7)
-            self.valueArray.insert(fatherNameData!, at: 8)
-            self.valueArray.insert(motherNameData!, at: 9)
-            self.valueArray.insert(parentMobileNoData!, at: 10)
-            self.valueArray.insert(currentAddressData!, at: 11)
-            self.valueArray.insert(primaryAddressData!, at: 12)
-            self.valueArray.insert(cityData!, at: 13)
-            self.valueArray.insert(aadharNoData!, at: 14)
-            self.valueArray.insert(passportNoData!, at: 15)
-            self.valueArray.insert(semester!, at: 16)
-            
-            self.spinner.stopAnimating()
-            
-            self.view.addSubview(self.imageView)
-            self.imageView.translatesAutoresizingMaskIntoConstraints = false
-            self.imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-            self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
-            self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
-            self.imageView.topAnchor.constraint(equalTo: self.lineView.bottomAnchor, constant: 20.0).isActive = true
-            
-            self.view.addSubview(self.tableView)
-            self.tableView.translatesAutoresizingMaskIntoConstraints = false
-            self.tableView.isUserInteractionEnabled = true
-            self.tableView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20.0).isActive = true
-            self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
-            self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
-            
         }
+        
+        self.valueArray.insert(studentName!, at: 0)
+        self.valueArray.insert(studentEnrollNo!, at: 1)
+        self.valueArray.insert(studentAdmission!, at: 2)
+        self.valueArray.insert(studentGender!, at: 3)
+        self.valueArray.insert(studentDOB!, at: 4)
+        self.valueArray.insert(studentMobile!, at: 5)
+        self.valueArray.insert(studentCategory!, at: 6)
+        self.valueArray.insert(studentBranch!, at: 7)
+        self.valueArray.insert(studentFatherName!, at: 8)
+        self.valueArray.insert(studentMotherName!, at: 9)
+        self.valueArray.insert(studentParentMobile!, at: 10)
+        self.valueArray.insert(studentCurrentAdd!, at: 11)
+        self.valueArray.insert(studentPrimaryAdd!, at: 12)
+        self.valueArray.insert(studentCity!, at: 13)
+        self.valueArray.insert(studentAadhar!, at: 14)
+        self.valueArray.insert(studentPassport!, at: 15)
+        self.valueArray.insert(studentSemester!, at: 16)
+        
+        self.view.addSubview(self.imageView)
+        self.imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        self.imageView.widthAnchor.constraint(equalToConstant: 110.0).isActive = true
+        self.imageView.heightAnchor.constraint(equalToConstant: 110.0).isActive = true
+        self.imageView.topAnchor.constraint(equalTo: self.lineView.bottomAnchor, constant: 20.0).isActive = true
+        
+        self.view.addSubview(self.tableView)
+        self.tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.tableView.isUserInteractionEnabled = true
+        self.tableView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20.0).isActive = true
+        self.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0.0).isActive = true
+        self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
+        self.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0.0).isActive = true
+            
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
